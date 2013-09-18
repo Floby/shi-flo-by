@@ -82,7 +82,8 @@ module.exports = function(grunt) {
                      'copy:prepare',
                      'transpile',
                      'jshint',
-                     'concat_sourcemap'
+                     'concat_sourcemap',
+                     'browserify:bundle'
                      ]));
 
   grunt.registerTask('build:styles', filterAvailable([
