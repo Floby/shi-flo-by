@@ -1,6 +1,6 @@
 {
   "name": "shi-fu-mi",
-  "namespace": "shi-fu-mi",
+  "namespace": "appkit",
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
