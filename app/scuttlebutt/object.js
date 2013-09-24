@@ -6,11 +6,21 @@ var SbObject = Ember.Object.extend({
     model.on('update', function (update, timestamp, source) {
       var key = update[0];
       var value = update[1];
-      self[key] = value;
+      // on first try, only the first one works
+      try {
+        self[key] = value;
+      }
+      // on second try, only that one does
+      catch (e) {
+        self.set(key, value);
+      }
     });
   },
   setUnknownProperty: function (key, value) {
     this._scuttlebuttModel.set(key, value);
+    this.addObserver(key, this, function () {
+      this._scuttlebuttModel.set(key, this.get(key));
+    });
   },
   createReadStream: function () {
     Ember.assert('No scuttlebutt model was initialised on this instance', this._scuttlebuttModel);

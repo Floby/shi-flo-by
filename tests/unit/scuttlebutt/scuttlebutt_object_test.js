@@ -67,3 +67,31 @@ test('it can send its changes to a scuttlebutt stream', function () {
     start();
   }, 10);
 });
+
+
+test('it can update changes to attributes to a scuttlebutt stream', function () {
+  // Given
+  expect(4);
+  var document = require('scuttlebutt/model')();
+  var set = Ember.set;
+  var sbo = SbObject.create();
+  sbo.createReadStream().pipe(document.createWriteStream());
+
+  // When
+  stop();
+  set(sbo, 'hello', 'world');
+  window.mydoc = document;
+  window.mysbo = sbo;
+
+  // Then
+  ok('world' === sbo.get('hello'), 'sbo.hello should contain "world"');
+  setTimeout(function () {
+    ok('world' === document.get('hello'), 'document.hello should contain "world"');
+    set(sbo, 'hello', 'goodbye');
+    ok('goodbye' === sbo.get('hello'), 'sbo.hello should contain "goodbye"');
+  }, 10);
+  setTimeout(function () {
+    ok('goodbye' === document.get('hello'), 'document.hello should contain "goodbye"');
+    start();
+  }, 20);
+});
