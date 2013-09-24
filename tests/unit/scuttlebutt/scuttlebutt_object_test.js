@@ -57,8 +57,6 @@ test('it can send its changes to a scuttlebutt stream', function () {
   // When
   stop();
   set(sbo, 'hello', 'world');
-  window.mydoc = document;
-  window.mysbo = sbo;
 
   // Then
   ok('world' === sbo.get('hello'), 'sbo.hello should contain "world"');
@@ -80,8 +78,6 @@ test('it can update changes to attributes to a scuttlebutt stream', function () 
   // When
   stop();
   set(sbo, 'hello', 'world');
-  window.mydoc = document;
-  window.mysbo = sbo;
 
   // Then
   ok('world' === sbo.get('hello'), 'sbo.hello should contain "world"');
@@ -92,6 +88,56 @@ test('it can update changes to attributes to a scuttlebutt stream', function () 
   }, 10);
   setTimeout(function () {
     ok('goodbye' === document.get('hello'), 'document.hello should contain "goodbye"');
+    start();
+  }, 20);
+});
+
+test('it can update a property initiliazed from scuttlebutt', function () {
+  // Given
+  expect(4);
+  var document = require('scuttlebutt/model')();
+  var sbo = SbObject.create();
+  sbo.createReadStream().pipe(document.createWriteStream());
+  document.createReadStream().pipe(sbo.createWriteStream());
+
+  // When
+  stop();
+  document.set('hello', 'world');
+
+  // Then
+  ok('world' === document.get('hello'), 'sbo.hello should contain "world"');
+  setTimeout(function () {
+    ok('world' === sbo.get('hello'), 'document.hello should contain "world"');
+    sbo.set('hello', 'goodbye');
+    ok('goodbye' === sbo.get('hello'), 'sbo.hello should contain "goodbye"');
+  }, 10);
+  setTimeout(function () {
+    ok('goodbye' === document.get('hello'), 'document.hello should contain "goodbye"');
+    start();
+  }, 20);
+});
+
+test('it can receive updates of a property initiliazed from it through scuttlebutt', function () {
+  // Given
+  expect(4);
+  var document = require('scuttlebutt/model')();
+  var sbo = SbObject.create();
+  sbo.createReadStream().pipe(document.createWriteStream());
+  document.createReadStream().pipe(sbo.createWriteStream());
+
+  // When
+  stop();
+  sbo.set('hello', 'world');
+
+  // Then
+  ok('world' === sbo.get('hello'), 'sbo.hello should contain "world"');
+  setTimeout(function () {
+    ok('world' === document.get('hello'), 'document.hello should contain "world"');
+    document.set('hello', 'goodbye');
+    ok('goodbye' === document.get('hello'), 'sbo.hello should contain "goodbye"');
+  }, 10);
+  setTimeout(function () {
+    ok('goodbye' === sbo.get('hello'), 'document.hello should contain "goodbye"');
     start();
   }, 20);
 });
