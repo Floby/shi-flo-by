@@ -16,3 +16,6 @@
 /connect.lock
 /libpeerconnection.log
 .DS_Store
+
+# tern for vim
+.tern-port
