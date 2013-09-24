@@ -27,16 +27,23 @@ test('it can create a writeable Stream for sync', function () {
   ok(stream.writable);
 });
 
-asyncTest('it can receive changes from a scuttlebutt stream', function () {
+test('it can receive changes from a scuttlebutt stream', function () {
+  // Given
   expect(1);
   var document = require('scuttlebutt/model')();
   var get = Ember.get;
-  var sbo = SbObject.create({
-    valueObserver: function () {
-      ok(get(sbo, 'hello') === 'world', 'key "hello" should contain "world"');
-    }.observes('hello')
-  });
+  var sbo = SbObject.create();
   document.createReadStream().pipe(sbo.createWriteStream());
+
+  // When
+  stop();
   document.set('hello', 'world');
+
+  // Then
+  setTimeout(function () {
+    ok(get(sbo, 'hello') === 'world', 'object.hello should contain "world"');
+    start();
+  }, 10);
 });
+
 

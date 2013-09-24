@@ -4,9 +4,7 @@ var SbObject = Ember.Object.extend({
     var model = this._scuttlebuttModel = new Model();
     var self = this;
     model.on('update', function (update) {
-      Ember.run(function () {
-        self.set(update[0], update[1]);
-      })
+      self.set(update[0], update[1]);
     });
   },
   createReadStream: function () {
