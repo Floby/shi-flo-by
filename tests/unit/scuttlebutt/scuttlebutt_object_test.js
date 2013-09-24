@@ -15,8 +15,8 @@ test('it can be instanciated', function () {
 
 test('it can create a readable Stream for sync', function () {
   var sbo = SbObject.create();
-  ok(typeof sbo.createReadStream == 'function');
+  ok(typeof sbo.createReadStream === 'function');
   var stream = sbo.createReadStream();
   ok(stream.readable);
-})
+});
 
