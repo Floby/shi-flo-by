@@ -37,6 +37,10 @@ var SbObject = Ember.Object.extend({
   createWriteStream: function () {
     Ember.assert('No scuttlebutt model was initialised on this instance', this._scuttlebuttModel);
     return this._scuttlebuttModel.createWriteStream();
+  },
+  createStream: function () {
+    Ember.assert('No scuttlebutt model was initialised on this instance', this._scuttlebuttModel);
+    return this._scuttlebuttModel.createStream();
   }
 });
 

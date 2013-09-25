@@ -27,6 +27,15 @@ test('it can create a writeable Stream for sync', function () {
   ok(stream.writable);
 });
 
+test('it can create a duplex Stream for sync', function () {
+  var sbo = SbObject.create();
+  ok(typeof sbo.createStream === 'function');
+  var stream = sbo.createStream();
+  console.log(stream);
+  ok(stream.readable);
+  ok(stream.writable);
+});
+
 test('it can receive changes from a scuttlebutt stream', function () {
   // Given
   expect(1);
