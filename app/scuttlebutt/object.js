@@ -13,7 +13,9 @@ var SbObject = Ember.Object.extend({
     model.on('update', function (update, timestamp, source) {
       var key = update[0];
       var value = update[1];
-      self.set(key, value);
+      Ember.run(function () {
+        self.set(key, value);
+      })
     });
   },
 
@@ -23,7 +25,8 @@ var SbObject = Ember.Object.extend({
   // covers the second
   setUnknownProperty: function (key, value) {
     if (value === this._scuttlebuttModel.get(key)) {
-      this[key] = value;
+      this[key] = {}; // this is to fool ember into thinking this is not an unkown property
+      this.set(key, value);
     }
     else {
       this._scuttlebuttModel.set(key, value);

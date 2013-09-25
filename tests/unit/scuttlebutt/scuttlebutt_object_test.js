@@ -31,7 +31,6 @@ test('it can create a duplex Stream for sync', function () {
   var sbo = SbObject.create();
   ok(typeof sbo.createStream === 'function');
   var stream = sbo.createStream();
-  console.log(stream);
   ok(stream.readable);
   ok(stream.writable);
 });

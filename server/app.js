@@ -21,6 +21,11 @@ var initiliazer = module.exports = function (options) {
   // SHOE
 
   var model = Model();
+  var count = 0;
+  model.set('hello', count);
+  setInterval(function () {
+    model.set('hello', ++count);
+  }, 1000);
 
   shoe(function (stream) {
     console.log('connection to', stream.meta);

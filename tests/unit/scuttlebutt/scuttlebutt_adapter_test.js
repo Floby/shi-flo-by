@@ -7,7 +7,6 @@ var getMockForShoe = function() {
   return function (endpoint) {
     return {
       createStream: sinon.spy(function () {
-        debugger;
         return new stream();
       })
     };
