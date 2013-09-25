@@ -50,6 +50,8 @@
     "loom": "~2.0.0",
     "loom-generators-ember": "0.0.1",
     "scuttlebutt": "~5.6.7",
-    "mux-demux-shoe": "~0.2.7"
+    "mux-demux-shoe": "~0.2.7",
+    "express": "~3.4.0",
+    "optimist": "~0.6.0"
   }
 }
