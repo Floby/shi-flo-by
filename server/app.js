@@ -5,6 +5,8 @@ var initiliazer = module.exports = function (options) {
   var shoe = require('mux-demux-shoe');
   var Model = require('scuttlebutt/model');
 
+  // EXPRESS
+
   var server = express();
 
   server.configure(function () {
@@ -15,6 +17,17 @@ var initiliazer = module.exports = function (options) {
   });
 
   var httpServer = http.createServer(server);
+
+  // SHOE
+
+  var model = Model();
+
+  shoe(function (stream) {
+    console.log('connection to', stream.meta);
+    stream
+      .pipe(model.createStream())
+      .pipe(stream);
+  }).install(httpServer, '/shoe');
 
   return httpServer;
 };
