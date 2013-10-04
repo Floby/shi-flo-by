@@ -18,19 +18,11 @@ var initiliazer = module.exports = function (options) {
 
   var httpServer = http.createServer(server);
 
-  var game = {
-    player1: new Model(),
-    player2: new Model()
-  };
-
   // SHOE
 
   var router = require('./shoeRouter');
 
-  shoe(function (stream) {
-    console.log('connection to', stream.meta);
-    router.handleStream(stream);
-  }).install(httpServer, '/shoe');
+  shoe(router).install(httpServer, '/shoe');
 
   return httpServer;
 };

@@ -1,18 +1,12 @@
+var Router = require('stream-router');
+
 var controllers = require('./shoeControllers');
 
-exports.handleStream = function handleStream(stream) {
-  if (!stream.meta) {
-    throw new TypeError('stream should have a meta property instead of ' + JSON.stringify(stream.meta));
-  }
+var router = Router();
+router.addRoute('/player1/me', controllers.player1.me);
+router.addRoute('/player1/opponent', controllers.player1.opponent);
+router.addRoute('/player2/me', controllers.player2.me);
+router.addRoute('/player2/opponent', controllers.player2.opponent);
 
-  var route = stream.meta.split('/');
-  if (route[0] === '') {
-    route.shift();
-  }
-  var controller = controllers;
-  var fragment;
-  while(fragment = route.shift()) {
-    controller = controller[fragment];
-  }
-  return controller(stream);
-}
+console.log('router', router);
+module.exports = router;
