@@ -3,7 +3,13 @@ var ApplicationController = Ember.Controller.extend({
     this.set('activeKeys', []);
   },
   currentKeyDown: function () {
-    return this.get('activeKeys.lastObject') || null;
+    var activeKeys = this.get('activeKeys');
+    var length = activeKeys.length;
+    if (!length) {
+      return null;
+    }
+    var activeKey = activeKeys[length-1];
+    return activeKey;
   }.property('activeKeys.@each'),
 
   actions: {
