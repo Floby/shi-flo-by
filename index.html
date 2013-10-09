@@ -13,6 +13,7 @@
 
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="css/custom.css" id="custom-css">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -40,13 +41,24 @@
 					</p>
 				</section>
 
+                <section>
+                    <h2>Qu'est-ce que c'est ?</h2>
+                    <p>
+                        <ul>
+                            <li>Plateforme pour éxecuter du Javascript (Google V8)</li>
+                            <li>Accès au système de fichiers et au réseau</li>
+                            <li>Langage haut niveau pour accès bas niveau</li>
+                        </ul>
+                    </p>
+                </section>
+
 				<section>
 					<h2>Ce qui est nul avec node.js</h2>
 					<p>
                         <ul>
                         	<li class="fragment">Langage interprêté</li>
                         	<li class="fragment">Javascript en plus !</li>
-                        	<li class="fragment">Le style asynchrone</li>
+                        	<li class="fragment">Style asynchrone difficile</li>
                         </ul>
 					</p>
 				</section>
@@ -65,9 +77,9 @@
                     <h2>Ce qui est encore plus cool avec node.js</h2>
 					<p>
                         <ul>
-                        	<li class="fragment">NPM</li>
-                        	<li class="fragment">La communauté</li>
-                        	<li class="fragment">Le déploiement</li>
+                        	<li class="fragment">NPM : Node Package Manager</li>
+                        	<li class="fragment">Communauté d'experts innovante</li>
+                        	<li class="fragment">Déploiement facile localement et dans le cloud</li>
                         </ul>
 					</p>
 				</section>
@@ -135,8 +147,8 @@
                 
                 <section>
                 	<section>
-                		<h2>Mes 3 modules préférés</h2>
-                        <h3>Express</h3>
+                		<h2>3 modules utiles</h2>
+                        <h3>Express : Serveur web</h3>
                         <pre>
                             var express = require('express');
 
@@ -149,62 +161,59 @@
                                .use(express.router());
 
                             app.get('/users/:user_id', function (req, res, next) {
-                                userExists(req.params.user_id, function (exist) {
-                                    if(exist) {
-                                        res.end('Hello');
-                                    }
-                                    else {
-                                        next();
-                                    }
-                                })
+                              userExists(req.params.user_id, function (exist) {
+                                if(exist) {
+                                  res.end('Hello');
+                                }
+                                else {
+                                  next();
+                                }
+                              })
                             });
                         </pre>
                 	</section>
                 	<section>
-                		<h2>Mes 3 modules préférés</h2>
-                        <h3>Dnode</h3>
+                		<h2>3 modules utiles</h2>
+                        <h3>Dnode : RPC/RMI</h3>
+                        <small class="pull-right">Serveur</small>
                         <pre>
-// Serveur
 var dnode = require('dnode');
-var server = dnode({
-    transform : function (s, cb) {
-        cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
-    }
-});
-server.listen(5004);
+dnode({
+  transform : function (s, cb) {
+    cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
+  }
+}).listen(5004);
 
 </pre>
 <hr/>
+                        <small class="pull-right">Client</small>
 <pre>
-// Client
-var dnode = require('dnode');
-
 var d = dnode.connect(5004);
 d.on('remote', function (remote) {
-    remote.transform('beep', function (s) {
-        console.log('beep => ' + s);
-        d.end();
-    });
+  remote.transform('beep', function (s) {
+    console.log('beep => ' + s);
+    d.end();
+  });
 })
                         </pre>
                 	</section>
                 	<section>
-                		<h2>Mes 3 modules préférés</h2>
-                        <h3>Socket.io</h3>
+                		<h2>3 modules utiles</h2>
+                        <h3>Socket.io : Websockets faciles</h3>
+                        <small class="pull-right">Serveur</small>
                         <pre>
-// Serveur
 var io = require('socket.io').listen(80);
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-      console.log(data);
-    });
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 </pre>
 <hr/>
+                        <small class="pull-right">Client</small>
 <pre>
-// Client
 var socket = io.connect('http://localhost');
 socket.on('news', function (data) {
   console.log(data);
@@ -215,15 +224,20 @@ socket.on('news', function (data) {
                 </section>
                 <section>
                 	<h2>Ma dernière trouvaille</h2>
-                    <h3>Scuttlebutt</h3>
+                    <h3>Scuttlebutt : Réplication multi-master</h3>
                 </section>
                 <section>
-                    <img src="scuttlebutt.png" style="border:none; background: none" />
+                    <h2>Réplication sur configuration variable</h2>
+                    <img src="images/scuttlebutt.png" style="border:none; background: none" />
+                    <p>
+                        <small><em>Eventual Consistency</em> sur tous les nœuds</small>
+                    </p>
                 </section>
                 <section>
+                    <h2>Mise en place en quelques lignes de code</h2>
+                    <br>
+                    <small class="pull-right">Serveur</small>
                     <pre>
-// Serveur
-var net = require('net')
 var Doc = require('crdt').Doc
 
 var A = new Doc()
@@ -235,9 +249,8 @@ net.createServer(function (stream) {
 })
 </pre>
 <hr/>
+                    <small class="pull-right">Client</small>
 <pre>
-// Client
-var net = require('net')
 var Doc = require('crdt').Doc
 
 var A = new Doc()
@@ -257,10 +270,11 @@ A.add({
                     <p>
                         <em>Quelles entreprises utilisent Node.js en production ?</em>
                     </p>
+                    <br>
                     <ul>
-                    	<li class="fragment">Github</li>
-                    	<li class="fragment">Myspace</li>
-                    	<li class="fragment">LinkedIn</li>
+                    	<li class="fragment">Github : Création et envoi des fichiers tar/zip</li>
+                    	<li class="fragment">Myspace : Application Web Express.js + Websockets</li>
+                    	<li class="fragment">LinkedIn : API REST pour application mobile</li>
                     </ul>
                 </section>
 
