@@ -34,7 +34,7 @@ if (!module.parent) {
     .describe('port', 'Run server on this port')
     .argv;
   var server = initiliazer(argv);
-  server.listen(8124, function () {
-    console.log('Server listening on http://localhost:8124/');
+  server.listen(argv.port, function () {
+    console.log('Server listening on http://localhost:'+argv.port+'/');
   });
 }
