@@ -12,7 +12,7 @@
     "test": "test"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && grunt build:dist",
     "start": "grunt server",
     "build": "grunt build:dist",
     "test": "grunt test:ci"
