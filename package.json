@@ -23,7 +23,6 @@
   },
   "author": "Florent Jaby",
 
-  "devDependencies": {
   "dependencies": {
     "grunt-contrib-connect": "~0.3.0",
     "grunt": "~0.4.1",
