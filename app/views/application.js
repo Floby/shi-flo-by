@@ -8,11 +8,19 @@ var ApplicationView = Ember.View.extend({
 
   keyup: function (event) {
     var controller = this.container.lookup('controller:application');
-    controller.send('keyup', event);
+    Ember.run(function () {
+      try {
+        controller.send('keyup', event);
+      } catch(e) {}
+    });
   },
   keydown: function (event) {
     var controller = this.container.lookup('controller:application');
-    controller.send('keydown', event);
+    Ember.run(function () {
+      try {
+        controller.send('keydown', event);
+      } catch(e) {}
+    });
   }
 });
 

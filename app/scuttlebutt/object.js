@@ -14,7 +14,9 @@ var SbObject = Ember.Object.extend({
       var key = update[0];
       var value = update[1];
       Ember.run(function () {
-        self.set(key, value);
+        try {
+          self.set(key, value);
+        } catch(e) {}
       })
     });
   },
