@@ -105,7 +105,7 @@ module.exports = function(grunt) {
                      'dom_munger:distHandlebars',
                      'useminPrepare',
                      'concat',
-                     'uglify',
+                     //'uglify',
                      'copy:dist',
                      'rev',
                      'usemin'
