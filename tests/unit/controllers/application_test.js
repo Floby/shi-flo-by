@@ -21,7 +21,7 @@ test('Unit - ApplicationController - takes the last available keydown character 
     controller.send('keyup', {which: 75});
     return wait();
   }).then(function () {
-    ok(controller.get('currentKeyDown') === 'J', 'current key should be J');
+    ok(controller.get('currentKeyDown') === null, 'current key should be null');
     controller.send('keyup', {which: 74});
     return wait();
   }).then(function () {

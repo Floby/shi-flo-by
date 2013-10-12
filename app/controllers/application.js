@@ -1,25 +1,12 @@
 var ApplicationController = Ember.Controller.extend({
-  init: function () {
-    this.set('activeKeys', []);
-  },
-  currentKeyDown: function () {
-    var activeKeys = this.get('activeKeys');
-    var length = activeKeys.length;
-    if (!length) {
-      return null;
-    }
-    var activeKey = activeKeys[length-1];
-    return activeKey;
-  }.property('activeKeys.@each'),
-
+  currentKeyDown: null,
   actions: {
     keydown: function (event) {
       var char = String.fromCharCode(event.which).toUpperCase();
-      this.get('activeKeys').pushObject(char);
+      this.set('currentKeyDown', char);
     },
     keyup: function (event) {
-      var char = String.fromCharCode(event.which).toUpperCase();
-      this.set('activeKeys', this.get('activeKeys').without(char));
+      this.set('currentKeyDown', null);
     }
   }
 });
