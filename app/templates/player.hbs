@@ -1,6 +1,4 @@
-opponent is holding down: {{opponent.currentKeyDown}}
-<br>
-{{playerId}} {{currentKeyDown}}
+<h3>Welcome <span class="text-primary">{{playerId}}</span></h3>
 
 <div class="row">
   <div class="col-md-6 opponent-name">
@@ -47,4 +45,10 @@ opponent is holding down: {{opponent.currentKeyDown}}
   <div class="col-md-6 col-md-offset-6 player-name">
     <h3 class="pull-right">You</h3>
   </div>
+</div>
+
+<div class="row">
+  <small>current key down {{currentKeyDown}}</small>
+  <br>
+  <small>Opponent holding down {{opponent.currentKeyDown}}</small>
 </div>
