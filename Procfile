@@ -1,1 +1,1 @@
-web: node server/app.js --base dist --port $PORT
+web: grunt build:dist && node server/app.js --base dist --port $PORT
