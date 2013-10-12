@@ -9,6 +9,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'vendor/bootstrap/js/bootstrap.js',
       'vendor/loader.js',
       'vendor/npm-modules.js',
       'vendor/jquery/jquery.js',
