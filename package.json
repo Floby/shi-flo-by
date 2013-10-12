@@ -44,7 +44,7 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-concurrent": "~0.3.1",
     "grunt-dom-munger": "~2.0.1",
-    "grunt-browserify": "~1.2.4"
+    "grunt-browserify": "1.2.4"
   },
   "dependencies": {
     "loom": "~2.0.0",
