@@ -1,3 +1,50 @@
 opponent is holding down: {{opponent.currentKeyDown}}
 <br>
 {{playerId}} {{currentKeyDown}}
+
+<div class="row">
+  <div class="col-md-6 opponent-name">
+    <h3>Opponent</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 opponent-action-list">
+    <div class="currently-doing">
+      <span {{bind-attr class=":label :rock isOpponentRockActive:label-danger:label-default"}}>Rock</span>
+      <span {{bind-attr class=":label :paper isOpponentPaperActive:label-danger:label-default"}}>Paper</span>
+      <span {{bind-attr class=":label :scissors isOpponentScissorsActive:label-danger:label-default"}}>Scissors</span>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row moves">
+  <div class="col-md-6 opponent-move">
+    <div class="move well well-lg">
+      {{opponentPlaying}}&nbsp;
+    </div>
+  </div>
+  <div class="col-md-6 player-move">
+    <div class="move well well-lg">
+      {{nowPlaying}}&nbsp;
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-6 player-action-list">
+    <div class="currently-doing">
+      <span {{bind-attr class=":label :rock isRockActive:label-primary:label-default"}}>[R]ock</span>
+      <span {{bind-attr class=":label :paper isPaperActive:label-primary:label-default"}}>[P]aper</span>
+      <span {{bind-attr class=":label :scissors isScissorsActive:label-primary:label-default"}}>[S]cissors</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-6 player-name">
+    <h3 class="pull-right">You</h3>
+  </div>
+</div>

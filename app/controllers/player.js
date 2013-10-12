@@ -8,9 +8,34 @@ var PlayerController = Ember.Controller.extend({
   observeCurrentKeyDown: function () {
     var model = this.get('me');
     var currentKeyDown = this.get('currentKeyDown');
-    console.log('current key down is', currentKeyDown);
     Ember.set(model, 'currentKeyDown', currentKeyDown);
   }.observes('currentKeyDown'),
+
+  moveFromKey: function (key) {
+    switch(key) {
+      case 'R': return 'rock';
+      case 'P': return 'paper';
+      case 'S': return 'scissors';
+      default: return null;
+    }
+  },
+
+  nowPlaying: function () {
+    var currentKeyDown = this.get('me.currentKeyDown');
+    return this.moveFromKey(currentKeyDown);
+  }.property('me.currentKeyDown'),
+
+  opponentPlaying: function () {
+    var currentKeyDown = this.get('opponent.currentKeyDown');
+    return this.moveFromKey(currentKeyDown);
+  }.property('opponent.currentKeyDown'),
+
+  isRockActive: function () { return this.get('nowPlaying') === 'rock' }.property('nowPlaying'),
+  isPaperActive: function () { return this.get('nowPlaying') === 'paper' }.property('nowPlaying'),
+  isScissorsActive: function () { return this.get('nowPlaying') === 'scissors' }.property('nowPlaying'),
+  isOpponentRockActive: function () { return this.get('opponentPlaying') === 'rock' }.property('opponentPlaying'),
+  isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper' }.property('opponentPlaying'),
+  isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors' }.property('opponentPlaying'),
 
   init: function () {
     this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create())

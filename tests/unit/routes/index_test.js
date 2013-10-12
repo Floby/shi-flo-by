@@ -13,7 +13,3 @@ test("it exists", function(){
   ok(route);
   ok(route instanceof Ember.Route);
 });
-
-test("#model", function(){
-  deepEqual(route.model(), ['red', 'yellow', 'blue']);
-});

@@ -6,3 +6,25 @@ html, body {
 @keyframes domChanged { from { background: yellow; } }
 @-webkit-keyframes domChanged { from { background: yellow; } }
 .ember-view { animation: domChanged 1s; -webkit-animation: domChanged 1s; }
+
+
+.main-header {
+  text-align: center
+}
+.player-link {
+  text-align: center
+}
+
+.currently-doing {
+  zoom: 200%;
+}
+
+.player-action-list {
+  text-align: right;
+}
+
+.moves .move {
+  font-weight: bold;
+  font-size: 4em;
+  text-align: center;
+}

@@ -9,11 +9,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'vendor/bootstrap/js/bootstrap.js',
       'vendor/loader.js',
       'vendor/npm-modules.js',
       'vendor/jquery/jquery.js',
       'vendor/handlebars/handlebars.js',
+      'vendor/bootstrap/js/bootstrap.js',
       'vendor/ember/index.js',
       'vendor/sinon-1.7.3.js',
       'assets/templates.js',
