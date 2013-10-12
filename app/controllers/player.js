@@ -37,6 +37,31 @@ var PlayerController = Ember.Controller.extend({
   isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper' }.property('opponentPlaying'),
   isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors' }.property('opponentPlaying'),
 
+  beats: function (a, b) {
+    if(a == 'rock' && b == 'rock') return false;
+    if(a == 'rock' && b == 'paper') return false;
+    if(a == 'rock' && b == 'scissors') return true;
+    if(a == 'paper' && b == 'rock') return true;
+    if(a == 'paper' && b == 'paper') return false;
+    if(a == 'paper' && b == 'scissors') return false;
+    if(a == 'scissors' && b == 'rock') return false;
+    if(a == 'scissors' && b == 'paper') return true;
+    if(a == 'scissors' && b == 'scissors') return false;
+    return false;
+  },
+
+  isWinning: function () {
+    return this.beats(this.get('nowPlaying'), this.get('opponentPlaying'));
+  }.property('nowPlaying', 'opponentPlaying'),
+
+  isLosing: function () {
+    return this.beats(this.get('opponentPlaying'), this.get('nowPlaying'));
+  }.property('nowPlaying', 'opponentPlaying'),
+
+  isDraw: function () {
+    return this.get('nowPlaying') == this.get('opponentPlaying') && this.get('nowPlaying');
+  }.property('nowPlaying', 'opponentPlaying'),
+
   init: function () {
     this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create())
   },

@@ -25,6 +25,18 @@
     </div>
   </div>
   <div class="col-md-2 game-info">
+    <h3>
+      &nbsp;
+      {{#if isDraw}}
+        Draw!
+      {{/if}}
+      {{#if isWinning}}
+        You won!
+      {{/if}}
+      {{#if isLosing}}
+        You lost!
+      {{/if}}
+    </h3>
   </div>
   <div class="col-md-4 player-move">
     <div class="move well well-lg">

@@ -16,7 +16,7 @@ html, body {
 }
 
 .currently-doing {
-  zoom: 200%;
+  font-size: 200%;
 }
 
 .player-action-list {
@@ -26,5 +26,9 @@ html, body {
 .moves .move {
   font-weight: bold;
   font-size: 4em;
+  text-align: center;
+}
+
+.moves .game-info {
   text-align: center;
 }
