@@ -9,8 +9,9 @@
     "test": "test"
   },
   "scripts": {
+    "install":"bower install",
     "start": "grunt server",
-    "build": "grunt build:debug",
+    "build": "grunt build:dist",
     "test": "grunt test:ci"
   },
   "repository": {
