@@ -2,8 +2,8 @@ var ApplicationView = Ember.View.extend({
   didInsertElement: function () {
     var el = $(document);
     var self = this;
-    el.keydown(this.keydown.bind(this));
-    el.keyup(this.keyup.bind(this));
+    el.keydown(function (event) { return self.keydown(event); });
+    el.keyup(function (event) { return self.keyup(event); });
   },
 
   keyup: function (event) {
