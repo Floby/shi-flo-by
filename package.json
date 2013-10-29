@@ -47,7 +47,9 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-concurrent": "~0.3.1",
     "grunt-dom-munger": "~2.0.1",
-    "grunt-browserify": "1.2.4"
+    "grunt-browserify": "1.2.4",
+    "should": "~2.0.2",
+    "mocha": "~1.13.0"
   },
   "dependencies": {
     "grunt-contrib-connect": "~0.3.0",
@@ -84,6 +86,7 @@
     "optimist": "~0.6.0",
     "stream-router": "~0.1.0",
     "grunt-cli": "~0.1.9",
-    "mongoose": "~3.6.20"
+    "mongoose": "~3.6.20",
+    "nconf": "~0.6.8"
   }
 }
