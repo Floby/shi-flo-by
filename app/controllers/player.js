@@ -1,4 +1,5 @@
 import ScuttlebuttAdapter from 'appkit/scuttlebutt/adapter';
+import beats from 'appkit/utils/beats';
 
 var PlayerController = Ember.Controller.extend({
   playerId: null,
@@ -37,18 +38,7 @@ var PlayerController = Ember.Controller.extend({
   isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper'; }.property('opponentPlaying'),
   isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors'; }.property('opponentPlaying'),
 
-  beats: function (a, b) {
-    if(a === 'rock' && b === 'rock') return false;
-    if(a === 'rock' && b === 'paper') return false;
-    if(a === 'rock' && b === 'scissors') return true;
-    if(a === 'paper' && b === 'rock') return true;
-    if(a === 'paper' && b === 'paper') return false;
-    if(a === 'paper' && b === 'scissors') return false;
-    if(a === 'scissors' && b === 'rock') return false;
-    if(a === 'scissors' && b === 'paper') return true;
-    if(a === 'scissors' && b === 'scissors') return false;
-    return false;
-  },
+  beats: beats,
 
   isWinning: function () {
     return this.beats(this.get('nowPlaying'), this.get('opponentPlaying'));
