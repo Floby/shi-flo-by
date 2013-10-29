@@ -17,7 +17,7 @@ var SbObject = Ember.Object.extend({
         try {
           self.set(key, value);
         } catch(e) {}
-      })
+      });
     });
   },
 

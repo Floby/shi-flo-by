@@ -26,5 +26,5 @@ test('Unit - ApplicationController - takes the last available keydown character 
     return wait();
   }).then(function () {
     ok(controller.get('currentKeyDown') === null, 'current key should be null');
-  })
+  });
 });

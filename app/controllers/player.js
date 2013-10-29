@@ -30,23 +30,23 @@ var PlayerController = Ember.Controller.extend({
     return this.moveFromKey(currentKeyDown);
   }.property('opponent.currentKeyDown'),
 
-  isRockActive: function () { return this.get('nowPlaying') === 'rock' }.property('nowPlaying'),
-  isPaperActive: function () { return this.get('nowPlaying') === 'paper' }.property('nowPlaying'),
-  isScissorsActive: function () { return this.get('nowPlaying') === 'scissors' }.property('nowPlaying'),
-  isOpponentRockActive: function () { return this.get('opponentPlaying') === 'rock' }.property('opponentPlaying'),
-  isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper' }.property('opponentPlaying'),
-  isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors' }.property('opponentPlaying'),
+  isRockActive: function () { return this.get('nowPlaying') === 'rock'; }.property('nowPlaying'),
+  isPaperActive: function () { return this.get('nowPlaying') === 'paper'; }.property('nowPlaying'),
+  isScissorsActive: function () { return this.get('nowPlaying') === 'scissors'; }.property('nowPlaying'),
+  isOpponentRockActive: function () { return this.get('opponentPlaying') === 'rock'; }.property('opponentPlaying'),
+  isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper'; }.property('opponentPlaying'),
+  isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors'; }.property('opponentPlaying'),
 
   beats: function (a, b) {
-    if(a == 'rock' && b == 'rock') return false;
-    if(a == 'rock' && b == 'paper') return false;
-    if(a == 'rock' && b == 'scissors') return true;
-    if(a == 'paper' && b == 'rock') return true;
-    if(a == 'paper' && b == 'paper') return false;
-    if(a == 'paper' && b == 'scissors') return false;
-    if(a == 'scissors' && b == 'rock') return false;
-    if(a == 'scissors' && b == 'paper') return true;
-    if(a == 'scissors' && b == 'scissors') return false;
+    if(a === 'rock' && b === 'rock') return false;
+    if(a === 'rock' && b === 'paper') return false;
+    if(a === 'rock' && b === 'scissors') return true;
+    if(a === 'paper' && b === 'rock') return true;
+    if(a === 'paper' && b === 'paper') return false;
+    if(a === 'paper' && b === 'scissors') return false;
+    if(a === 'scissors' && b === 'rock') return false;
+    if(a === 'scissors' && b === 'paper') return true;
+    if(a === 'scissors' && b === 'scissors') return false;
     return false;
   },
 
@@ -59,20 +59,20 @@ var PlayerController = Ember.Controller.extend({
   }.property('nowPlaying', 'opponentPlaying'),
 
   isDraw: function () {
-    return this.get('nowPlaying') == this.get('opponentPlaying') && this.get('nowPlaying');
+    return this.get('nowPlaying') === this.get('opponentPlaying') && this.get('nowPlaying');
   }.property('nowPlaying', 'opponentPlaying'),
 
   init: function () {
-    this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create())
+    this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create());
   },
   me: function () {
-    var adapter = this.get('scuttlebuttAdapter')
+    var adapter = this.get('scuttlebuttAdapter');
     var url = '/' + this.get('playerId') + '/me';
     return adapter.getModelAtUrl(url);
   }.property('playerId'),
 
   opponent: function () {
-    var adapter = this.get('scuttlebuttAdapter')
+    var adapter = this.get('scuttlebuttAdapter');
     var url = '/' + this.get('playerId') + '/opponent';
     return adapter.getModelAtUrl(url);
   }.property('playerId')

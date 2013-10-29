@@ -2,7 +2,7 @@ import ScuttlebuttAdapter from 'appkit/scuttlebutt/adapter';
 
 var IndexController = Ember.ArrayController.extend({
   init: function () {
-    this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create())
+    this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create());
   }
 });
 

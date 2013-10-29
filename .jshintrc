@@ -59,5 +59,10 @@
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true
+  "esnext": true,
+  "globals": {
+    "jQuery": true,
+    "sinon": true,
+    "wait": true
+  }
 }

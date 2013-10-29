@@ -10,7 +10,7 @@ var getMockForShoe = function() {
         return new stream();
       })
     };
-  }
+  };
 };
 
 var Adapter = ScuttlebuttAdapter.extend({

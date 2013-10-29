@@ -25,5 +25,5 @@ test('Application controller reacts to keydown and keyup events for letters', fu
   }).then(function () {
     var application = App.__container__.lookup('controller:application');
     ok(application.get('currentKeyDown') === null, 'The application controller should detect we stopped pressing the J key');
-  })
-})
+  });
+});
