@@ -8,5 +8,4 @@ router.addRoute('/player1/opponent', controllers.player1.opponent);
 router.addRoute('/player2/me', controllers.player2.me);
 router.addRoute('/player2/opponent', controllers.player2.opponent);
 
-console.log('router', router);
 module.exports = router;
