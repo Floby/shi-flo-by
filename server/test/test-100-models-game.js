@@ -1,17 +1,33 @@
 var mongoose = require('mongoose');
 require('../lib/models/game');
-require('should');
+var should = require('should');
+var db = require('./db');
 
 describe('Model game', function () {
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/octo-fu-mi_testing', done);
-  });
-  after(function (done) {
-    mongoose.connection.close(done);
-  });
+  db();
 
   it('exists', function () {
     var Game = mongoose.model('Game');
     Game.should.be.of.type('function');
-  })
+  });
+
+  describe('save method', function () {
+    it('should create a new id for player1 and player2', function (done) {
+      var Game = mongoose.model('Game');
+      var game = new Game();
+      game.save(function (err) {
+        if(err) return done(err);
+        try {
+          should.notStrictEqual('undefined', typeof game.player1);
+          should.notStrictEqual('undefined', typeof game.player2);
+          done();
+        } catch(e) {
+          done(e);
+        }
+      });
+    });
+  });
+
+
+
 })
