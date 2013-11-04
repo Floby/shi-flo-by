@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+require('../lib/models/game');
+require('should');
 
 describe('Model game', function () {
   before(function (done) {
@@ -9,6 +11,7 @@ describe('Model game', function () {
   });
 
   it('exists', function () {
-
+    var Game = mongoose.model('Game');
+    Game.should.be.of.type('function');
   })
 })
