@@ -1,1 +1,1 @@
-web: node server/app.js --base dist --port $PORT
+web: node server --base dist --port $PORT
