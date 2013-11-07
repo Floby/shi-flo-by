@@ -20,12 +20,28 @@ describe('Server', function () {
   after(function (done) {
     server.close(done)
   });
+
   it('should give a HTTP 200 when requesting /', function (done) {
-    supertest('http://localhost:8125/')
+    supertest(server)
       .get('/')
       .expect(200)
       .end(function (err, res) {
         return done(err);
       })
+  });
+
+  it('should create a game when posting to /game', function (done) {
+    supertest(server)
+      .post('/game')
+      .send({game: {}})
+      .expect(201)
+      .expect('Location', /^\/game\/[a-zA-Z0-9]?$/)
+      .end(function (err, res) {
+        if(err) return done(err);
+        supertest(server)
+          .get(res.headers.location)
+          .expect(200)
+          .end(done);
+      });
   });
 });
