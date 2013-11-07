@@ -30,6 +30,31 @@ describe('Server', function () {
       })
   });
 
+  it('should send the game as json on GET /game/:id', function (done) {
+    var Game = require('../lib/models/game');
+    var game = new Game();
+    game.save(function (err) {
+      if(err) return done(err, game);
+      supertest(server)
+        .get('/game/' + game._id)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+        .end(function (err, res) {
+          if(err) return done(err)
+          try {
+            var body = res.body;
+            expect(body).to.include.keys('game')
+            var g = body.game
+            expect(g.id).to.be.a('string')
+            expect(g.id).to.equal(game._id.toString())
+            done();
+          } catch(e) {
+            done(e);
+          }
+        });
+    })
+  });
+
   it('should create a game when posting to /game', function (done) {
     supertest(server)
       .post('/game')

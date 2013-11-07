@@ -16,4 +16,11 @@ Schema.pre('save', function (done) {
   done();
 });
 
+Schema.set('toObject', {
+  transform: function(document, ret, options) {
+    ret.id = document._id;
+    delete ret._id;
+  }
+});
+
 module.exports = mongoose.model('Game', Schema);

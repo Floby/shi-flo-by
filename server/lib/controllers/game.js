@@ -5,7 +5,7 @@ exports.get = function (req, res, next) {
   var gameId = req.params.game_id;
   Game.findById(gameId, function (err, game) {
     if(err) return next(err);
-    res.json(game.toObject());
+    res.json({game: game.toObject()});
   });
 };
 exports.create = function (req, res, next) {
