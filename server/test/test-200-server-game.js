@@ -35,7 +35,7 @@ describe('Server', function () {
       .post('/game')
       .send({game: {}})
       .expect(201)
-      .expect('Location', /^\/game\/[a-zA-Z0-9]?$/)
+      .expect('Location', /^\/game\/[a-zA-Z0-9]+$/)
       .end(function (err, res) {
         if(err) return done(err);
         supertest(server)
