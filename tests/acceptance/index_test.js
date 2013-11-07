@@ -14,3 +14,10 @@ test("index renders", function(){
     ok(exists("h1:contains('Shi-Fu-Mi')"));
   });
 });
+
+test('Document title is correct', function () {
+  expect(1);
+  visit('/').then(function(){
+    equal(document.title, 'Octo-Fu-Mi');
+  });
+})
