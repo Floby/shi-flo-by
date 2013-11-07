@@ -20,4 +20,4 @@ test('Document title is correct', function () {
   visit('/').then(function(){
     equal(document.title, 'Octo-Fu-Mi');
   });
-})
+});
