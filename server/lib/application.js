@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express');
 var shoe = require('mux-demux-shoe');
 var Model = require('scuttlebutt/model');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 
 var initiliazer = module.exports = function (options) {
@@ -17,8 +18,17 @@ var initiliazer = module.exports = function (options) {
     server.use(express.static(path.resolve(options.base)));
   });
 
+  server.param('game_id', function (req, res, next, game_id) {
+    try {
+      ObjectId.fromString(game_id);
+      next();
+    }
+    catch(e) {
+      res.send(404);
+    }
+  });
   server.post('/game', controllers.game.create);
-  server.get('/game/abcd', controllers.game.get);
+  server.get('/game/:game_id', controllers.game.get);
 
   var httpServer = http.createServer(server);
 

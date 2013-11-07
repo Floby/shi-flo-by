@@ -35,12 +35,14 @@ describe('Server', function () {
       .post('/game')
       .send({game: {}})
       .expect(201)
+      .expect('Content-Type', /application\/json/)
       .expect('Location', /^\/game\/[a-zA-Z0-9]+$/)
       .end(function (err, res) {
         if(err) return done(err);
         supertest(server)
           .get(res.headers.location)
           .expect(200)
+          .expect('Content-Type', /application\/json/)
           .end(done);
       });
   });

@@ -1,7 +1,19 @@
+var Game = require('../models/game');
+var CastError = require('mongoose/lib/error').CastError;
+
 exports.get = function (req, res, next) {
-  res.send(200);
+  var gameId = req.params.game_id;
+  Game.findById(gameId, function (err, game) {
+    if(err) return next(err);
+    res.json(game.toObject());
+  });
 };
 exports.create = function (req, res, next) {
-  res.setHeader('Location', '/game/abcd');
-  res.send(201);
+  var game = new Game();
+  game.save(function (err, game) {
+    if(err) return next(err);
+    var id = game._id;
+    res.setHeader('Location', '/game/' + id);
+    res.send(201, game.toObject());
+  })
 };
