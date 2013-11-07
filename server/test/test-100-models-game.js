@@ -27,7 +27,4 @@ describe('Model game', function () {
       });
     });
   });
-
-
-
 })

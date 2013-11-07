@@ -63,6 +63,7 @@
   "globals": {
     "jQuery": true,
     "sinon": true,
-    "wait": true
+    "wait": true,
+    "App": true
   }
 }
