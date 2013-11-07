@@ -21,3 +21,11 @@ test('Document title is correct', function () {
     equal(document.title, 'Octo-Fu-Mi');
   });
 });
+
+test('Show a button to create a new game', function () {
+  expect(2);
+  visit('/').then(function () {
+    ok(exists('button#create-game'), 'button exist');
+    equal($('button#create-game').text(), "New Game", 'text is invalid');
+  })
+});
