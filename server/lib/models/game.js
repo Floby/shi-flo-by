@@ -1,17 +1,19 @@
+var sha1 = require('node-sha1');
 var mongoose = require('mongoose');
 
 var Schema = new mongoose.Schema({
-  player1: String,
-  player2: String
+  owner: String,
+  challenger: String
 });
 
 
 Schema.pre('save', function (done) {
-  if (typeof this.player1 === 'undefined') {
-    this.player1 = 'a';
+  var seed = String(Date.now());
+  if (typeof this.owner === 'undefined') {
+    this.owner = sha1(seed + 'owner');
   }
-  if (typeof this.player2 === 'undefined') {
-    this.player2 = 'b';
+  if (typeof this.challenger === 'undefined') {
+    this.challenger = sha1(seed + 'challenger');
   }
   done();
 });

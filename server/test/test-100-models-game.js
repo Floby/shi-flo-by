@@ -18,8 +18,10 @@ describe('Model game', function () {
       game.save(function (err) {
         if(err) return done(err);
         try {
-          should.notStrictEqual('undefined', typeof game.player1);
-          should.notStrictEqual('undefined', typeof game.player2);
+          should.notStrictEqual('undefined', typeof game.owner);
+          should.notStrictEqual('undefined', typeof game.challenger);
+          game.owner.should.notStrictEqual(game.challenger);
+          console.log('game', game.toObject());
           done();
         } catch(e) {
           done(e);
