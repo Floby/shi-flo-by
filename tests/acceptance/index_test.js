@@ -15,13 +15,6 @@ test("index renders", function(){
   });
 });
 
-test('Document title is correct', function () {
-  expect(1);
-  visit('/').then(function(){
-    equal(document.title, 'Octo-Fu-Mi');
-  });
-});
-
 test('Show a button to create a new game', function () {
   expect(2);
   visit('/').then(function () {
