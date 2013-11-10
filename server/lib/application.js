@@ -13,7 +13,7 @@ var initiliazer = module.exports = function (options) {
 
   server.configure(function () {
     server.set('port', options.port);
-    server.use(express.logger('dev'));
+    if(!options.silent) server.use(express.logger('dev'));
     server.use(server.router);
     server.use(express.static(path.resolve(options.base)));
   });

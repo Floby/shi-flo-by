@@ -12,6 +12,7 @@ describe('Server', function () {
   before(function (done) {
     server = initializer({
       port: 8125,
+      silent: true,
       base: __dirname + '/../../tmp/public',
       database: database_uri
     });

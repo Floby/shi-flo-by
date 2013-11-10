@@ -15,7 +15,7 @@
     "postinstall": "bower install && grunt build:dist",
     "start": "grunt server",
     "build": "grunt build:dist",
-    "test": "istanbul cover --print detail _mocha -R spec server/test/test-*.js && grunt test:ci"
+    "test": "istanbul cover --print detail _mocha -- -R list server/test/test-*.js && grunt test:ci"
   },
   "repository": {
     "type": "git",
