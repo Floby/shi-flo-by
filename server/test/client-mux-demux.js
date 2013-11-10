@@ -5,42 +5,42 @@ var shoe = require('./shoe-client');
 module.exports = createMdmStream;
 
 function createMdmStream(uri) {
-  var mdm = MuxDemux({
+  var mdm = new MuxDemux({
         error: false
-    })
-    , stream = shoe(uri)
+    });
+  var stream = shoe(uri);
 
-  stream.on("connect", onconnect)
+  stream.on("connect", onconnect);
 
-  mdm.pipe(stream).pipe(mdm)
+  mdm.pipe(stream).pipe(mdm);
 
   // if anything ends clean everything up. This bubbles the disconnect
   // upto boot so that boot can try reconnecting
-  stream.on("end", cleanup)
-  stream.on("close", cleanup)
-  mdm.on("end", cleanup)
-  mdm.on("close", cleanup)
+  stream.on("end", cleanup);
+  stream.on("close", cleanup);
+  mdm.on("end", cleanup);
+  mdm.on("close", cleanup);
 
-  return mdm
+  return mdm;
 
   function onconnect() {
-    mdm.emit("connect")
+    mdm.emit("connect");
   }
 
   function cleanup() {
     if (!mdm.ended) {
-      mdm.end()
+      mdm.end();
     }
     if (!stream.ended) {
-      stream.end()
+      stream.end();
     }
 
-    mdm.destroy && mdm.destroy()
-    stream.destroy && stream.destroy()
+    if(mdm.destroy) mdm.destroy();
+    if(stream.destroy) stream.destroy();
 
-    mdm.removeListener("end", cleanup)
-    mdm.removeListener("close", cleanup)
-    stream.removeListener("end", cleanup)
-    stream.removeListener("close", cleanup)
+    mdm.removeListener("end", cleanup);
+    mdm.removeListener("close", cleanup);
+    stream.removeListener("end", cleanup);
+    stream.removeListener("close", cleanup);
   }
 }

@@ -28,4 +28,4 @@ describe('Model game', function () {
       });
     });
   });
-})
+});

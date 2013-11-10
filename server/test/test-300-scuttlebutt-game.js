@@ -1,7 +1,7 @@
 var trycatch = require('trycatch');
 var expect = require('chai').expect;
 var supertest = require('supertest');
-var initializer = require('../')
+var initializer = require('../');
 var db = require('./db');
 var shoe = require('./client-mux-demux');
 var Model = require('scuttlebutt/model');
@@ -42,7 +42,7 @@ describe('Server', function () {
             var mdm = shoe('ws://localhost:8125/shoe');
             var toTest = 2;
             testModel(game.owner);
-            testModel(game.challenger)
+            testModel(game.challenger);
 
             function testModel(id) {
               var stream = mdm.createStream('/play/' + id);
@@ -50,16 +50,16 @@ describe('Server', function () {
               stream.pipe(model.createStream()).pipe(stream);
               model.on('update', function() {
                 if(model.get('id') !== id) {
-                  return done(new Error(model.get('id') + 'was different of ' + id))
+                  return done(new Error(model.get('id') + 'was different of ' + id));
                 }
                 if(--toTest <= 0) done();
               });
-            };
+            }
           });
       }, function (err) {
-        done(err)
-      })
+        done(err);
+      });
     });
-  })
+  });
 });
 

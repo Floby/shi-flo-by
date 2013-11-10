@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var supertest = require('supertest');
-var initializer = require('../')
+var initializer = require('../');
 var db = require('./db');
 
 var database_uri = 'mongodb://localhost/octo-fu-mi_test';
@@ -19,7 +19,7 @@ describe('Server', function () {
     server.listen(8125, done);
   });
   after(function (done) {
-    server.close(done)
+    server.close(done);
   });
 
   it('should give a HTTP 200 when requesting /', function (done) {
@@ -28,7 +28,7 @@ describe('Server', function () {
       .expect(200)
       .end(function (err, res) {
         return done(err);
-      })
+      });
   });
 
   it('should send the game as json on GET /game/:id', function (done) {
@@ -41,19 +41,19 @@ describe('Server', function () {
         .expect(200)
         .expect('Content-Type', /application\/json/)
         .end(function (err, res) {
-          if(err) return done(err)
+          if(err) return done(err);
           try {
             var body = res.body;
-            expect(body).to.include.keys('game')
-            var g = body.game
-            expect(g.id).to.be.a('string')
-            expect(g.id).to.equal(game._id.toString())
+            expect(body).to.include.keys('game');
+            var g = body.game;
+            expect(g.id).to.be.a('string');
+            expect(g.id).to.equal(game._id.toString());
             done();
           } catch(e) {
             done(e);
           }
         });
-    })
+    });
   });
 
   it('should create a game when posting to /game', function (done) {

@@ -7,9 +7,9 @@ fs.readdirSync(__dirname)
     return filename !== 'index.js';
   })
   .filter(function (filename) {
-    return /\.js$/.test(filename);
+    return (/\.js$/).test(filename);
   })
   .forEach(function(filename) {
     var name = filename.substr(0, filename.length - path.extname(filename).length);
     exports[name] = require('./' + filename);
-  })
+  });

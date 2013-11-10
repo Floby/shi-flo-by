@@ -17,5 +17,5 @@ after(function (done) {
 module.exports = function () {
   afterEach(function (done) {
     connection.db.dropDatabase(done);
-  })
-}
+  });
+};

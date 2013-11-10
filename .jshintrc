@@ -28,15 +28,19 @@
     "strictEqual",
     "module",
     "process",
-    "expect",
     "visit",
     "exists",
     "fillIn",
     "click",
-    "find"
+    "find",
+    "describe",
+    "it",
+    "before",
+    "after",
+    "afterEach"
   ],
-  "node" : false,
-  "browser" : false,
+  "node" : true,
+  "browser" : true,
   "boss" : true,
   "curly": false,
   "debug": false,
@@ -65,7 +69,6 @@
     "sinon": true,
     "wait": true,
     "App": true,
-    "exports": true,
-    "module": true
+    "expect": true
   }
 }

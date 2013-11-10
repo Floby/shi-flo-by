@@ -9,7 +9,7 @@ var Stream = module.exports = function Stream(uri) {
   this._connected = false;
   this._writeQueue = [];
 
-  var uri = uri + '/websocket';
+  uri = uri + '/websocket';
   this._ws = new ws(uri);
   var self = this;
   this._ws.on('open', function() {
@@ -30,7 +30,7 @@ Stream.prototype._write = function (chunk, encoding, callback) {
   }
   this._ws.send(chunk.toString());
   callback();
-}
+};
 
 Stream.prototype._flushQueue = function () {
   var message;
@@ -40,4 +40,4 @@ Stream.prototype._flushQueue = function () {
 };
 
 Stream.prototype._read = function () {
-}
+};
