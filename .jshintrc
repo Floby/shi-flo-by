@@ -64,6 +64,8 @@
     "jQuery": true,
     "sinon": true,
     "wait": true,
-    "App": true
+    "App": true,
+    "exports": true,
+    "module": true
   }
 }
