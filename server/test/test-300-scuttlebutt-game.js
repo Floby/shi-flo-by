@@ -45,7 +45,7 @@ describe('Server', function () {
             testModel(game.challenger);
 
             function testModel(id) {
-              var stream = mdm.createStream('/play/' + id);
+              var stream = mdm.createStream('/play/' + id + '/me');
               var model = new Model();
               stream.pipe(model.createStream()).pipe(stream);
               model.on('update', function() {
