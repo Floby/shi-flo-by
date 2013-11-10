@@ -12,7 +12,7 @@ var database_uri = 'mongodb://localhost/octo-fu-mi_test';
 var server;
 
 describe('Server', function () {
-  db();
+  //db();
   before(function (done) {
     server = initializer({
       port: 8125,
@@ -51,9 +51,7 @@ describe('Server', function () {
           var model = new Model();
           stream.pipe(model.createStream()).pipe(stream);
           model.on('update', function() {
-            if(model.get('id') !== id) {
-              return done(new Error(model.get('id') + 'was different of ' + id));
-            }
+            expect(model.get('id')).to.equal(id);
             if(--toTest <= 0) done();
           });
         }
@@ -61,6 +59,7 @@ describe('Server', function () {
         done(err);
       });
     });
+
     it('exposes a scuttlebutt stream of the opponent for both players', function (done) {
       trycatch(function () {
         var mdm = shoe('ws://localhost:8125/shoe');
@@ -73,16 +72,14 @@ describe('Server', function () {
           var model = new Model();
           stream.pipe(model.createStream()).pipe(stream);
           model.on('update', function() {
-            if(model.get('id') !== other) {
-              return done(new Error(model.get('id') + 'was different of ' + other));
-            }
+            expect(model.get('id')).to.equal(other);
             if(--toTest <= 0) done();
           });
         }
       }, function (err) {
         done(err);
       });
-    })
+    });
   });
 });
 

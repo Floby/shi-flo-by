@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 require('../lib/models/game');
 var should = require('should');
+var expect = require('chai').expect;
+var trycatch = require('trycatch');
 var db = require('./db');
 
 describe('Model game', function () {
@@ -26,6 +28,38 @@ describe('Model game', function () {
           done(e);
         }
       });
+    });
+  });
+
+  describe('findByPlayId static method', function () {
+    it('can find a game by its owner\'s playId', function (done) {
+      var Game = mongoose.model('Game');
+      var game = new Game();
+      trycatch(function () {
+        game.save(function (err, game) {
+          if(err) return done(err);
+          Game.findByPlayId(game.owner, function (err, g) {
+            if(err) return done(err);
+            expect(g._id.toString()).to.equal(game._id.toString());
+            done();
+          });
+        });
+      }, done);
+    });
+
+    it('can find a game by its challenger\'s playId', function (done) {
+      var Game = mongoose.model('Game');
+      var game = new Game();
+      trycatch(function () {
+        game.save(function (err, game) {
+          if(err) return done(err);
+          Game.findByPlayId(game.challenger, function (err, g) {
+            if(err) return done(err);
+            expect(g._id.toString()).to.equal(game._id.toString());
+            done();
+          });
+        });
+      }, done);
     });
   });
 });

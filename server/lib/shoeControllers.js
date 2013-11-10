@@ -1,4 +1,5 @@
 var Model = require('scuttlebutt/model');
+var Game = require('./models/game');
 
 var game = {
   player1: new Model(),
@@ -7,11 +8,28 @@ var game = {
 game.player1.set('playerId', 'player1');
 game.player2.set('playerId', 'player2');
 
-exports['play'] = function (stream, params) {
-  var playId = params.play_id;
-  var model = new Model();
-  stream.pipe(model.createStream()).pipe(stream);
-  model.set('id', playId);
+exports.play = {
+  me: function (stream, params) {
+    var playId = params.play_id;
+    var model = new Model();
+    stream.pipe(model.createStream()).pipe(stream);
+    model.set('id', playId);
+  },
+  opponent: function (stream, params) {
+    var playId = params.play_id;
+    var model = new Model();
+    stream.pipe(model.createStream()).pipe(stream);
+    Game.findByPlayId(playId, function (err, game) {
+      console.log('found', arguments)
+      if(err) throw err;
+      if(game.owner === playId) {
+        model.set('id', game.challenger);
+      }
+      else {
+        model.set('id', game.owner);
+      }
+    });
+  }
 };
 
 exports['player1'] = {

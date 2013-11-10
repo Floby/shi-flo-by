@@ -6,6 +6,15 @@ var Schema = new mongoose.Schema({
   challenger: String
 });
 
+Schema.static('findByPlayId', function (playId, callback) {
+  return this.findOne({
+    '$or': [
+      {owner: playId},
+      {challenger: playId}
+    ]
+  }, callback);
+});
+
 
 Schema.pre('save', function (done) {
   var seed = String(Date.now());
