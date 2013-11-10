@@ -14,6 +14,6 @@ exports.create = function (req, res, next) {
     if(err) return next(err);
     var id = game._id;
     res.setHeader('Location', '/game/' + id);
-    res.send(201, game.toObject());
+    res.send(201, {game: game.toObject()});
   })
 };

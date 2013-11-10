@@ -20,7 +20,7 @@ describe('Model game', function () {
         try {
           should.notStrictEqual('undefined', typeof game.owner);
           should.notStrictEqual('undefined', typeof game.challenger);
-          game.owner.should.notStrictEqual(game.challenger);
+          game.owner.should.not.equal(game.challenger);
           console.log('game', game.toObject());
           done();
         } catch(e) {
