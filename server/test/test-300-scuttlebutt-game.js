@@ -61,6 +61,28 @@ describe('Server', function () {
         done(err);
       });
     });
+    it('exposes a scuttlebutt stream of the opponent for both players', function (done) {
+      trycatch(function () {
+        var mdm = shoe('ws://localhost:8125/shoe');
+        var toTest = 2;
+        testModel(game.owner, game.challenger);
+        testModel(game.challenger, game.owner);
+
+        function testModel(id, other) {
+          var stream = mdm.createStream('/play/' + id + '/opponent');
+          var model = new Model();
+          stream.pipe(model.createStream()).pipe(stream);
+          model.on('update', function() {
+            if(model.get('id') !== other) {
+              return done(new Error(model.get('id') + 'was different of ' + other));
+            }
+            if(--toTest <= 0) done();
+          });
+        }
+      }, function (err) {
+        done(err);
+      });
+    })
   });
 });
 
