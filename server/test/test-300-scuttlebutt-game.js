@@ -28,34 +28,35 @@ describe('Server', function () {
   });
 
   describe('When a game is created,', function () {
+    var game;
+    before(function (done) {
+      supertest(server)
+        .post('/game')
+        .send({game:{}})
+        .end(function (err, res) {
+          if(err) return done(err);
+          game = res.body.game;
+          done();
+        });
+    });
     it('a scuttlebutt stream is available for both players', function (done) {
       trycatch(function () {
-        supertest(server)
-          .post('/game')
-          .send({game: {}})
-          .expect(201)
-          .expect('Content-Type', /application\/json/)
-          .expect('Location', /^\/game\/[a-zA-Z0-9]+$/)
-          .end(function (err, res) {
-            if(err) return done(err);
-            var game = res.body.game;
-            var mdm = shoe('ws://localhost:8125/shoe');
-            var toTest = 2;
-            testModel(game.owner);
-            testModel(game.challenger);
+        var mdm = shoe('ws://localhost:8125/shoe');
+        var toTest = 2;
+        testModel(game.owner);
+        testModel(game.challenger);
 
-            function testModel(id) {
-              var stream = mdm.createStream('/play/' + id + '/me');
-              var model = new Model();
-              stream.pipe(model.createStream()).pipe(stream);
-              model.on('update', function() {
-                if(model.get('id') !== id) {
-                  return done(new Error(model.get('id') + 'was different of ' + id));
-                }
-                if(--toTest <= 0) done();
-              });
+        function testModel(id) {
+          var stream = mdm.createStream('/play/' + id + '/me');
+          var model = new Model();
+          stream.pipe(model.createStream()).pipe(stream);
+          model.on('update', function() {
+            if(model.get('id') !== id) {
+              return done(new Error(model.get('id') + 'was different of ' + id));
             }
+            if(--toTest <= 0) done();
           });
+        }
       }, function (err) {
         done(err);
       });
