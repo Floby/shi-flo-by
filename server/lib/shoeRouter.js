@@ -8,5 +8,8 @@ router.addRoute('/player1/opponent', controllers.player1.opponent);
 router.addRoute('/player2/me', controllers.player2.me);
 router.addRoute('/player2/opponent', controllers.player2.opponent);
 router.addRoute('/play/:play_id', controllers.play);
+router.addRoute('*', function (stream) {
+  stream.close();
+})
 
 module.exports = router;
