@@ -1,5 +1,5 @@
 var MuxDemux = require('mux-demux');
-var shoe = require('sockjs-stream');
+var shoe = require('./shoe-client');
 
 // Stolen from https://github.com/Raynos/mux-demux-shoe/blob/master/browser.js
 module.exports = createMdmStream;

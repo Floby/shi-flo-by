@@ -7,6 +7,13 @@ var game = {
 game.player1.set('playerId', 'player1');
 game.player2.set('playerId', 'player2');
 
+exports['play'] = function (stream, params) {
+  var playId = params.play_id;
+  var model = new Model();
+  stream.pipe(model.createStream()).pipe(stream);
+  model.set('id', playId);
+};
+
 exports['player1'] = {
   me: function (stream) {
     var model = game.player1;
