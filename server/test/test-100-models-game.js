@@ -30,7 +30,7 @@ describe('Model game', function () {
       });
     });
     it('should keep existing playIds for owner and challenger when they already exist', function (done) {
-      var Game = mongoose.model('Game')
+      var Game = mongoose.model('Game');
       var game = new Game();
       game.save(function (err, game) {
         if(err) return done(err);
@@ -38,14 +38,14 @@ describe('Model game', function () {
         var challenger = game.challenger;
         game.save(function (err, game) {
           try {
-            expect(game.owner).to.equal(owner)
-            expect(game.challenger).to.equal(challenger)
+            expect(game.owner).to.equal(owner);
+            expect(game.challenger).to.equal(challenger);
             done();
           } catch(e) {
             done(e);
           }
-        })
-      })
+        });
+      });
     });
   });
 

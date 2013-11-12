@@ -60,7 +60,7 @@ describe('Server', function () {
     supertest(server)
       .get('/game/helloworld') // not a HEX string
       .expect(404)
-      .end(done)
+      .end(done);
   });
 
   it('should create a game when posting to /game', function (done) {
