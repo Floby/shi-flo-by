@@ -81,7 +81,7 @@ describe('Server', function () {
       });
     });
 
-    it('connected the challenger model to the owner\'s opponent model', function (done) {
+    it('connects the challenger model to the owner\'s opponent model', function (done) {
       trycatch(function () {
         // Given
         var mdm = shoe('ws://localhost:8125/shoe');
@@ -103,6 +103,33 @@ describe('Server', function () {
           // ignore other updates than what we expect
           if(key !== 'test_field') return;
           expect(ownerOpponent.get('test_field')).to.equal(testValue);
+          done();
+        });
+      }, done);
+    });
+
+    it('connects the owner model to the challenger\'s opponent model', function (done) {
+      trycatch(function () {
+        // Given
+        var mdm = shoe('ws://localhost:8125/shoe');
+        var challengerOpponent = new Model();
+        var owner = new Model();
+        var challengerOpponentStream = mdm.createStream('/play/' + game.challenger + '/opponent');
+        var ownerStream = mdm.createStream('/play/' + game.owner + '/me');
+        ownerStream.pipe(owner.createStream()).pipe(ownerStream);
+        challengerOpponentStream.pipe(challengerOpponent.createStream()).pipe(challengerOpponentStream);
+        var testValue = Math.random();
+
+        // When
+        owner.set('test_field', testValue);
+
+        // Then
+        challengerOpponent.on('update', function(update) {
+          var key = update[0];
+          var value = update[1];
+          // ignore other updates than what we expect
+          if(key !== 'test_field') return;
+          expect(challengerOpponent.get('test_field')).to.equal(testValue);
           done();
         });
       }, done);
