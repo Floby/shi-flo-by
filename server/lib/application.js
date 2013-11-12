@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var path = require('path');
 var http = require('http');
 var express = require('express');
@@ -36,6 +37,8 @@ var initiliazer = module.exports = function (options) {
   var router = require('./shoeRouter');
 
   shoe(router).install(httpServer, '/shoe');
+
+  mongoose.connect(options.database);
 
   return httpServer;
 };
