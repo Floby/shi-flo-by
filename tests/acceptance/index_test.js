@@ -1,9 +1,16 @@
 import Index from 'appkit/routes/index';
 import App from 'appkit/app';
 
+var server;
 module("Acceptances - Index", {
   setup: function(){
     App.reset();
+  },
+  teardown: function () {
+    if(server) {
+      server.restore();
+      server = null;
+    }
   }
 });
 
@@ -25,8 +32,20 @@ test('Show a button to create a new game', function () {
 
 test('Create game button creates a new Game model and redirects to /play/:play_id', function () {
   expect(1);
+  server = sinon.fakeServer.create();
+  server.respondWith('POST', '/test', [
+    201,
+    {'Content-Type': 'application/json'},
+    JSON.stringify({game: {
+      id: 'myGameId',
+      owner: 'myTestPlayId',
+      challenger: 'myChallengerPlayId'
+    }})
+  ]);
   visit('/').then(function () {
-    return click('button#create-game');
+    click('button#create-game');
+    server.respond();
+    return wait();
   }).then(function () {
     var router = App.__container__.lookup('router:main');
     var url = router.get('url');
