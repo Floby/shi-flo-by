@@ -4,4 +4,3 @@ var PlayController = PlayerController.extend({
 });
 
 export default PlayController;
-
