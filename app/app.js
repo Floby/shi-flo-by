@@ -1,6 +1,9 @@
 import Resolver from 'resolver';
 import router from 'appkit/router';
 
+import scuttlebuttInitializer from 'appkit/initializers/scuttlebutt';
+Ember.Application.initializer(scuttlebuttInitializer);
+
 var App = Ember.Application.create({
   LOG_ACTIVE_GENERATION: true,
   LOG_VIEW_LOOKUPS: true,
