@@ -4,7 +4,9 @@ module('Player controller');
 
 test('it exists', function () {
   ok(PlayerController);
-  var controller = PlayerController.create();
+  Ember.run(function () {
+    var controller = PlayerController.create();
+  });
 });
 
 test('it observes currentKeyDown and sets the current value on the `me` model', function () {
