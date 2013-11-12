@@ -38,8 +38,6 @@ var initiliazer = module.exports = function (options) {
 
   shoe(router).install(httpServer, '/shoe');
 
-  mongoose.connect(options.database);
-
   return httpServer;
 };
 
