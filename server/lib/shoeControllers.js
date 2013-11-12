@@ -25,7 +25,6 @@ exports.play = {
     stream.pipe(model.createStream()).pipe(stream);
 
     Game.findByPlayId(playId, function (err, game) {
-      if(err) throw err;
       var m;
       if(game.owner === playId) {
         m = modelFor(game, 'owner');
@@ -43,7 +42,6 @@ exports.play = {
     stream.pipe(model.createStream()).pipe(stream);
 
     Game.findByPlayId(playId, function (err, game) {
-      if(err) throw err;
       var m;
       if(game.owner === playId) {
         m = modelFor(game, 'challenger');
