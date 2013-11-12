@@ -33,7 +33,7 @@ test('Show a button to create a new game', function () {
 test('Create game button creates a new Game model and redirects to /play/:play_id', function () {
   expect(1);
   server = sinon.fakeServer.create();
-  server.respondWith('POST', '/test', [
+  server.respondWith('POST', '/game', [
     201,
     {'Content-Type': 'application/json'},
     JSON.stringify({game: {
@@ -52,3 +52,26 @@ test('Create game button creates a new Game model and redirects to /play/:play_i
     equal(url, '/play/myTestPlayId');
   });
 });
+
+test('Create game button creates a new game and displays and link to join', function () {
+  expect(2);
+  server = sinon.fakeServer.create();
+  server.respondWith('POST', '/game', [
+    201,
+    {'Content-Type': 'application/json'},
+    JSON.stringify({game: {
+      id: 'myGameId',
+      owner: 'myTestPlayId',
+      challenger: 'myChallengerPlayId'
+    }})
+  ]);
+  visit('/').then(function () {
+    click('button#create-game');
+    server.respond();
+    return wait();
+  }).then(function () {
+    var link = window.location.origin + '/#/play/myChallengerPlayId';
+    ok(exists('.invite-link'), 'there should be an url to give to the challenger');
+    equal(find('.invite-link', App.rootElement).text(), link);
+  });
+})
