@@ -1,16 +1,10 @@
 import ScuttlebuttAdapter from 'appkit/scuttlebutt/adapter';
 import beats from 'appkit/utils/beats';
+import pathEqualsConstant from 'appkit/utils/pathEqualsConstant';
 
 var PlayerController = Ember.Controller.extend({
   needs: ['application'],
   playerId: null,
-  meUrl: function () {
-    return '/play/' + this.get('playerId') + '/me';
-  }.property('playerId'),
-
-  opponentUrl: function () {
-    return '/play/' + this.get('playerId') + '/opponent';
-  }.property('playerId'),
 
   currentKeyDown: Ember.computed.alias('controllers.application.currentKeyDown'),
 
@@ -33,12 +27,12 @@ var PlayerController = Ember.Controller.extend({
   nowPlaying: Ember.computed.alias('me.currentMove'),
   opponentPlaying: Ember.computed.alias('opponent.currentMove'),
 
-  isRockActive: function () { return this.get('nowPlaying') === 'rock'; }.property('nowPlaying'),
-  isPaperActive: function () { return this.get('nowPlaying') === 'paper'; }.property('nowPlaying'),
-  isScissorsActive: function () { return this.get('nowPlaying') === 'scissors'; }.property('nowPlaying'),
-  isOpponentRockActive: function () { return this.get('opponentPlaying') === 'rock'; }.property('opponentPlaying'),
-  isOpponentPaperActive: function () { return this.get('opponentPlaying') === 'paper'; }.property('opponentPlaying'),
-  isOpponentScissorsActive: function () { return this.get('opponentPlaying') === 'scissors'; }.property('opponentPlaying'),
+  isRockActive: pathEqualsConstant('nowPlaying', 'rock'),
+  isPaperActive: pathEqualsConstant('nowPlaying', 'paper'),
+  isScissorsActive: pathEqualsConstant('nowPlaying', 'scissors'),
+  isOpponentRockActive: pathEqualsConstant('opponentPlaying', 'rock'),
+  isOpponentPaperActive: pathEqualsConstant('opponentPlaying', 'paper'),
+  isOpponentScissorsActive: pathEqualsConstant('opponentPlaying', 'scissors'),
 
   beats: beats,
 
