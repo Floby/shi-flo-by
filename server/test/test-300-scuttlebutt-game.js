@@ -18,7 +18,8 @@ describe('Server', function () {
       port: 8125,
       silent: true,
       base: __dirname + '/../../tmp/public',
-      database: database_uri
+      database: database_uri,
+      noConnectMongoose: true
     });
     server.listen(8125, done);
   });

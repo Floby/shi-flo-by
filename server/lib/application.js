@@ -37,6 +37,7 @@ var initiliazer = module.exports = function (options) {
   var router = require('./shoeRouter');
 
   shoe(router).install(httpServer, '/shoe');
+  if(!options.noConnectMongoose) mongoose.connect(options.database);
 
   return httpServer;
 };
