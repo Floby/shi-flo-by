@@ -1,6 +1,6 @@
 import pathEqualsConstant from 'appkit/utils/pathEqualsConstant';
 
-module('Utility - pathEqualsConstant')
+module('Utility - pathEqualsConstant');
 
 test('it exists', function () {
   ok(pathEqualsConstant, 'pathEqualsConstant should be truthy');
