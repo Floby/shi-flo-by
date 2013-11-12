@@ -54,25 +54,3 @@ exports.play = {
     });
   }
 };
-
-exports['player1'] = {
-  me: function (stream) {
-    var model = game.player1;
-    stream.pipe(model.createStream()).pipe(stream);
-  },
-  opponent: function (stream) {
-    var model = game.player2;
-    stream.pipe(model.createStream({writeable: false, sendClock: true})).pipe(stream);
-  }
-};
-
-exports['player2'] = {
-  me: function (stream) {
-    var model = game.player2;
-    stream.pipe(model.createStream()).pipe(stream);
-  },
-  opponent: function (stream) {
-    var model = game.player1;
-    stream.pipe(model.createStream({writeable: false, sendClock: true})).pipe(stream);
-  }
-};
