@@ -56,6 +56,13 @@ describe('Server', function () {
     });
   });
 
+  it('should send a 404 error when trying to GET a game with a malformed id', function (done) {
+    supertest(server)
+      .get('/game/helloworld') // not a HEX string
+      .expect(404)
+      .end(done)
+  });
+
   it('should create a game when posting to /game', function (done) {
     supertest(server)
       .post('/game')
