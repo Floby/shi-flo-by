@@ -2,7 +2,7 @@ import ScuttlebuttAdapter from 'appkit/scuttlebutt/adapter';
 import beats from 'appkit/utils/beats';
 import pathEqualsConstant from 'appkit/utils/pathEqualsConstant';
 
-var PlayerController = Ember.Controller.extend({
+var PlayerController = Ember.ObjectController.extend({
   needs: ['application'],
   playerId: null,
 
