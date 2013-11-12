@@ -13,14 +13,21 @@ exports.play = {
     var playId = params.play_id;
     var model = new Model();
     stream.pipe(model.createStream()).pipe(stream);
-    model.set('id', playId);
+    Game.findByPlayId(playId, function (err, game) {
+      if(err) throw err;
+      if(game.owner === playId) {
+        model.set('id', game.owner);
+      }
+      else {
+        model.set('id', game.challenger);
+      }
+    });
   },
   opponent: function (stream, params) {
     var playId = params.play_id;
     var model = new Model();
     stream.pipe(model.createStream()).pipe(stream);
     Game.findByPlayId(playId, function (err, game) {
-      console.log('found', arguments)
       if(err) throw err;
       if(game.owner === playId) {
         model.set('id', game.challenger);
