@@ -18,6 +18,7 @@ var PlayerController = Ember.Controller.extend({
     var model = this.get('me');
     var currentKeyDown = this.get('currentKeyDown');
     Ember.set(model, 'currentKeyDown', currentKeyDown);
+    Ember.set(model, 'currentMove', this.moveFromKey(currentKeyDown));
   }.observes('currentKeyDown'),
 
   moveFromKey: function (key) {
@@ -29,15 +30,8 @@ var PlayerController = Ember.Controller.extend({
     }
   },
 
-  nowPlaying: function () {
-    var currentKeyDown = this.get('me.currentKeyDown');
-    return this.moveFromKey(currentKeyDown);
-  }.property('me.currentKeyDown'),
-
-  opponentPlaying: function () {
-    var currentKeyDown = this.get('opponent.currentKeyDown');
-    return this.moveFromKey(currentKeyDown);
-  }.property('opponent.currentKeyDown'),
+  nowPlaying: Ember.computed.alias('me.currentMove'),
+  opponentPlaying: Ember.computed.alias('opponent.currentMove'),
 
   isRockActive: function () { return this.get('nowPlaying') === 'rock'; }.property('nowPlaying'),
   isPaperActive: function () { return this.get('nowPlaying') === 'paper'; }.property('nowPlaying'),

@@ -15,8 +15,8 @@ test('it observes currentKeyDown and sets the current value on the `me` model', 
     currentKeyDown: null
   });
   equal('undefined', typeof me.get('currentKeyDown'));
-  controller.set('currentKeyDown', 'F');
-  equal('F', me.get('currentKeyDown'));
+  controller.set('currentKeyDown', 'R');
+  equal(me.get('currentMove'), 'rock');
 });
 
 
