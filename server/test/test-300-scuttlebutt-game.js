@@ -50,7 +50,7 @@ describe('Server', function () {
           var stream = mdm.createStream('/play/' + id + '/me');
           var model = new Model();
           stream.pipe(model.createStream()).pipe(stream);
-          model.on('update', function() {
+          model.once('update', function() {
             expect(model.get('id')).to.equal(id);
             if(--toTest <= 0) done();
           });
@@ -71,7 +71,7 @@ describe('Server', function () {
           var stream = mdm.createStream('/play/' + id + '/opponent');
           var model = new Model();
           stream.pipe(model.createStream()).pipe(stream);
-          model.on('update', function() {
+          model.once('update', function() {
             expect(model.get('id')).to.equal(other);
             if(--toTest <= 0) done();
           });
@@ -79,6 +79,33 @@ describe('Server', function () {
       }, function (err) {
         done(err);
       });
+    });
+
+    it('connected the challenger model to the owner\'s opponent model', function (done) {
+      trycatch(function () {
+        // Given
+        var mdm = shoe('ws://localhost:8125/shoe');
+        var ownerOpponent = new Model();
+        var challenger = new Model();
+        var ownerOpponentStream = mdm.createStream('/play/' + game.owner + '/opponent');
+        var challengerStream = mdm.createStream('/play/' + game.challenger + '/me');
+        challengerStream.pipe(challenger.createStream()).pipe(challengerStream);
+        ownerOpponentStream.pipe(ownerOpponent.createStream()).pipe(ownerOpponentStream);
+        var testValue = Math.random();
+
+        // When
+        challenger.set('test_field', testValue);
+
+        // Then
+        ownerOpponent.on('update', function(update) {
+          var key = update[0];
+          var value = update[1];
+          // ignore other updates than what we expect
+          if(key !== 'test_field') return;
+          expect(ownerOpponent.get('test_field')).to.equal(testValue);
+          done();
+        });
+      }, done);
     });
   });
 });

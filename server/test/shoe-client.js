@@ -20,6 +20,9 @@ var Stream = module.exports = function Stream(uri) {
   this._ws.on('message', function(message) {
     self.push(message.toString());
   });
+  this._ws.on('close', function () {
+    self.push(null);
+  });
 };
 util.inherits(Stream, DuplexStream);
 
