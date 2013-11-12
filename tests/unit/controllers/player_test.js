@@ -15,7 +15,9 @@ test('it observes currentKeyDown and sets the current value on the `me` model', 
     currentKeyDown: null
   });
   equal('undefined', typeof me.get('currentKeyDown'));
-  controller.set('currentKeyDown', 'R');
+  Ember.run(function () {
+    controller.set('currentKeyDown', 'R');
+  });
   equal(me.get('currentMove'), 'rock');
 });
 
