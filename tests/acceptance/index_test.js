@@ -22,3 +22,14 @@ test('Show a button to create a new game', function () {
     equal($('button#create-game').text(), "New Game", 'text is invalid');
   });
 });
+
+test('Create game button creates a new Game model and redirects to /play/:play_id', function () {
+  expect(1);
+  visit('/').then(function () {
+    return click('button#create-game');
+  }).then(function () {
+    var router = App.__container__.lookup('router:main');
+    var url = router.get('url');
+    equal(url, '/play/myTestPlayId');
+  });
+});
