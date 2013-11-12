@@ -2,8 +2,16 @@ import ScuttlebuttAdapter from 'appkit/scuttlebutt/adapter';
 import beats from 'appkit/utils/beats';
 
 var PlayerController = Ember.Controller.extend({
-  playerId: null,
   needs: ['application'],
+  playerId: null,
+  meUrl: function () {
+    return '/play/' + this.get('playerId') + '/me';
+  }.property('playerId'),
+
+  opponentUrl: function () {
+    return '/play/' + this.get('playerId') + '/opponent';
+  }.property('playerId'),
+
   currentKeyDown: Ember.computed.alias('controllers.application.currentKeyDown'),
 
   observeCurrentKeyDown: function () {
