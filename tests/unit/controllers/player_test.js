@@ -9,13 +9,13 @@ test('it exists', function () {
 
 test('it observes currentKeyDown and sets the current value on the `me` model', function () {
   var me = Ember.Object.create();
-  var controller = PlayerController.create({
-    container: App.__container__,
-    me: me,
-    currentKeyDown: null
-  });
-  equal('undefined', typeof me.get('currentKeyDown'));
   Ember.run(function () {
+    var controller = PlayerController.create({
+      container: App.__container__,
+      me: me,
+      currentKeyDown: null
+    });
+    equal('undefined', typeof me.get('currentKeyDown'));
     controller.set('currentKeyDown', 'R');
   });
   equal(me.get('currentMove'), 'rock');
@@ -24,10 +24,13 @@ test('it observes currentKeyDown and sets the current value on the `me` model', 
 
 test('method moveFromKey detects what the currentKeyDown means', function () {
   var me = Ember.Object.create();
-  var controller = PlayerController.create({
-    container: App.__container__,
-    me: me,
-    currentKeyDown: null
+  var controller;
+  Ember.run(function () {
+    controller = PlayerController.create({
+      container: App.__container__,
+      me: me,
+      currentKeyDown: null
+    });
   });
   equal(null, controller.moveFromKey('L'));
   equal('rock', controller.moveFromKey('R'));
