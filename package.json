@@ -13,7 +13,7 @@
   },
   "scripts": {
     "postinstall": "bower install && grunt build:dist",
-    "start": "grunt server",
+    "start": "grunt build:dist && node server",
     "build": "grunt build:dist",
     "test": "istanbul cover --print detail _mocha -- -R list server/test/test-*.js && grunt test:ci"
   },
