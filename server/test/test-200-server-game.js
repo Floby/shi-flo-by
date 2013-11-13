@@ -7,7 +7,7 @@ var database_uri = 'mongodb://localhost/octo-fu-mi_test';
 
 var server;
 
-describe('Server', function () {
+describe('HTTP Server', function () {
   db();
   before(function (done) {
     server = initializer({

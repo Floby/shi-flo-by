@@ -14,6 +14,10 @@ var initiliazer = module.exports = function (options) {
 
   server.configure(function () {
     server.set('port', options.port);
+    server.use(function (req, res, next) {
+      res.removeHeader('X-Powered-By');
+      next();
+    });
     if(!options.silent) server.use(express.logger('dev'));
     server.use(server.router);
     server.use(express.static(path.resolve(options.base)));
