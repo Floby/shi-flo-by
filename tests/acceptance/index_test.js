@@ -74,4 +74,4 @@ test('Create game button creates a new game and displays and link to join', func
     ok(exists('.invite-link'), 'there should be an url to give to the challenger');
     equal(find('.invite-link', App.rootElement).text(), link);
   });
-})
+});

@@ -10,7 +10,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var initiliazer = module.exports = function (options) {
   // EXPRESS
   var server = express();
-  var controllers = require('./controllers');
+  var routes = require('./routes');
 
   server.configure(function () {
     server.set('port', options.port);
@@ -28,8 +28,8 @@ var initiliazer = module.exports = function (options) {
       res.send(404);
     }
   });
-  server.post('/game', controllers.game.create);
-  server.get('/game/:game_id', controllers.game.get);
+
+  routes.setupRoutes(server);
 
   var httpServer = http.createServer(server);
 
