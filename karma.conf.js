@@ -11,6 +11,7 @@ module.exports = function(config) {
     files: [
       'vendor/loader.js',
       'vendor/npm-modules.js',
+      'vendor/leapjs/leap.js',
       'vendor/jquery/jquery.js',
       'vendor/handlebars/handlebars.js',
       'vendor/bootstrap/js/bootstrap.js',
