@@ -51,3 +51,32 @@ test('has a currentKeyDown attribute synced with keyboard events', function () {
 
   equal(null, source.get('currentKeyDown'));
 });
+
+test('computes a currentMove property from the currentKeyDown', function () {
+  expect(4);
+  var el = document.createElement('div');
+  var source = KeyboardSource.create({
+    el: el
+  });
+
+  Ember.run(function () {
+    source.set('currentKeyDown', 'R');
+  });
+  equal('rock', source.get('currentMove'));
+
+  Ember.run(function () {
+    source.set('currentKeyDown', 'P');
+  });
+  equal('paper', source.get('currentMove'));
+
+  Ember.run(function () {
+    source.set('currentKeyDown', 'S');
+  });
+  equal('scissors', source.get('currentMove'));
+
+  Ember.run(function () {
+    source.set('currentKeyDown', 'J');
+  });
+  equal(null, source.get('currentMove'));
+
+});

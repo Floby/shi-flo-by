@@ -18,7 +18,17 @@ var KeyboardSource = Ember.Object.extend({
     Ember.run(function () {
       self.set('currentKeyDown', null);
     })
-  }
+  },
+
+  currentMove: function () {
+    var move = this.get('currentKeyDown');
+    switch(move) {
+      case 'R': return 'rock';
+      case 'P': return 'paper';
+      case 'S': return 'scissors';
+      default: return null;
+    }
+  }.property('currentKeyDown')
 });
 
 export default KeyboardSource;
