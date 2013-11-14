@@ -1,5 +1,9 @@
 <h2>Welcome <span class="text-primary">{{playerId}}</span>! Prepare to play...</h2>
-<p>Invite your opponent at <code class="invite-link">{{opponentUrl}}</code></p>
+{{#unless opponent.online}}
+  <p>Invite your opponent at <code class="invite-link">{{inviteUrl}}</code></p>
+{{else}}
+  <p>&nbsp;</p>
+{{/unless}}
 
 <div class="row">
   <div class="col-md-5 col-md-offset-1 opponent-name">

@@ -9,8 +9,6 @@ var IndexRoute = Ember.Route.extend({
         data: {game: {}}
       }).then(function(payload) {
         var model = playRoute.model({play_id: payload.game.owner});
-        var link = window.location.origin + '/#/play/' + payload.game.challenger;
-        model.opponentUrl = link;
         return router.transitionTo('play', model);
       });
     }
