@@ -6,30 +6,13 @@ var PlayerController = Ember.ObjectController.extend({
   needs: ['application'],
   playerId: null,
 
-  source: null,
+  source: function () {
+    return this.get('keyboard');
+  }.property(),
+
   observeSource: function () {
     this.set('me.currentMove', this.get('source.currentMove'));
   }.observes('source.currentMove'),
-
-  currentKeyDown: function () {
-    return this.get('controllers.application.currentKeyDown') 
-  }.property('controllers.application.currentKeyDown'),
-
-  observeCurrentKeyDown: function () {
-    var model = this.get('me');
-    var currentKeyDown = this.get('currentKeyDown');
-    Ember.set(model, 'currentKeyDown', currentKeyDown);
-    Ember.set(model, 'currentMove', this.moveFromKey(currentKeyDown));
-  }.observes('currentKeyDown'),
-
-  moveFromKey: function (key) {
-    switch(key) {
-      case 'R': return 'rock';
-      case 'P': return 'paper';
-      case 'S': return 'scissors';
-      default: return null;
-    }
-  },
 
   nowPlaying: Ember.computed.alias('me.currentMove'),
   opponentPlaying: Ember.computed.alias('opponent.currentMove'),
@@ -57,8 +40,7 @@ var PlayerController = Ember.ObjectController.extend({
 
 
   init: function () {
-    this.get('leap.currentMove');
-    this.get('currentKeyDown');
+    this.get('source.currentMove');
   },
 
   me: function () {
