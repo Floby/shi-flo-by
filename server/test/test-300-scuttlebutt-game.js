@@ -1,3 +1,4 @@
+/*jshint expr: true*/
 var trycatch = require('trycatch');
 var expect = require('chai').expect;
 var supertest = require('supertest');
@@ -145,7 +146,7 @@ describe('Scuttlebutt shoe Server', function () {
       trycatch(function () {
         var ownerStream = mdm.createStream('/play/' + game.owner + '/me');
         var ownerOpponentStream = mdm.createStream('/play/' + game.owner + '/opponent');
-        var owner = new Model()
+        var owner = new Model();
         var ownerOpponent = new Model();
         ownerStream.pipe(owner.createStream()).pipe(ownerStream);
         ownerOpponentStream.pipe(ownerOpponent.createStream()).pipe(ownerOpponentStream);
@@ -161,7 +162,7 @@ describe('Scuttlebutt shoe Server', function () {
             ownerOpponent.once('change:online', function () {
               expect(ownerOpponent.get('online')).not.to.be.ok;
               done();
-            })
+            });
           });
         });
 

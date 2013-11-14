@@ -1,3 +1,4 @@
+/*jshint expr: true*/
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var initializer = require('../');
@@ -28,12 +29,13 @@ describe('HTTP Server', function () {
       .get('/')
       .end(function (err, res) {
         try {
-          expect(res.headers['x-powered-by']).to.be.undefined;
+          var header = res.headers['x-powered-by'];
+          expect(header).to.be.undefined;
           done();
         } catch(e) {
-          done(e)
+          done(e);
         }
-      })
+      });
   });
 });
 
