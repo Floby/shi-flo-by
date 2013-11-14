@@ -23,6 +23,9 @@ var Stream = module.exports = function Stream(uri) {
   this._ws.on('close', function () {
     self.push(null);
   });
+  this.on('finish', function() {
+    self._ws.close();
+  });
 };
 util.inherits(Stream, DuplexStream);
 

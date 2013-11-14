@@ -34,6 +34,10 @@ exports.play = {
       }
       var ms = m.createStream();
       ms.pipe(model.createStream()).pipe(ms);
+      m.set('online', true);
+      stream.on('end', function() {
+        m.set('online', false);
+      });
     });
   },
   opponent: function (stream, params) {

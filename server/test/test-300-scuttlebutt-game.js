@@ -11,7 +11,7 @@ var database_uri = 'mongodb://localhost/octo-fu-mi_test';
 
 var server;
 
-describe('Server', function () {
+describe('Scuttlebutt shoe Server', function () {
   //db();
   before(function (done) {
     server = initializer({
@@ -30,6 +30,7 @@ describe('Server', function () {
 
   describe('When a game is created,', function () {
     var game;
+    var mdm;
     before(function (done) {
       supertest(server)
         .post('/game')
@@ -40,9 +41,16 @@ describe('Server', function () {
           done();
         });
     });
+    beforeEach(function (done) {
+      mdm = shoe('ws://localhost:8125/shoe');
+      done();
+    });
+    afterEach(function (done) {
+      mdm.destroy();
+      done();
+    });
     it('a scuttlebutt stream is available for both players', function (done) {
       trycatch(function () {
-        var mdm = shoe('ws://localhost:8125/shoe');
         var toTest = 2;
         testModel(game.owner);
         testModel(game.challenger);
@@ -63,7 +71,6 @@ describe('Server', function () {
 
     it('exposes a scuttlebutt stream of the opponent for both players', function (done) {
       trycatch(function () {
-        var mdm = shoe('ws://localhost:8125/shoe');
         var toTest = 2;
         testModel(game.owner, game.challenger);
         testModel(game.challenger, game.owner);
@@ -85,7 +92,6 @@ describe('Server', function () {
     it('connects the challenger model to the owner\'s opponent model', function (done) {
       trycatch(function () {
         // Given
-        var mdm = shoe('ws://localhost:8125/shoe');
         var ownerOpponent = new Model();
         var challenger = new Model();
         var ownerOpponentStream = mdm.createStream('/play/' + game.owner + '/opponent');
@@ -112,7 +118,6 @@ describe('Server', function () {
     it('connects the owner model to the challenger\'s opponent model', function (done) {
       trycatch(function () {
         // Given
-        var mdm = shoe('ws://localhost:8125/shoe');
         var challengerOpponent = new Model();
         var owner = new Model();
         var challengerOpponentStream = mdm.createStream('/play/' + game.challenger + '/opponent');
@@ -133,6 +138,34 @@ describe('Server', function () {
           expect(challengerOpponent.get('test_field')).to.equal(testValue);
           done();
         });
+      }, done);
+    });
+
+    it('Tells me if the current player\'s opponent is online', function (done) {
+      trycatch(function () {
+        var ownerStream = mdm.createStream('/play/' + game.owner + '/me');
+        var ownerOpponentStream = mdm.createStream('/play/' + game.owner + '/opponent');
+        var owner = new Model()
+        var ownerOpponent = new Model();
+        ownerStream.pipe(owner.createStream()).pipe(ownerStream);
+        ownerOpponentStream.pipe(ownerOpponent.createStream()).pipe(ownerOpponentStream);
+
+        ownerOpponent.once('change:online', function() {
+          expect(ownerOpponent.get('online')).not.to.be.ok;
+          var challengerStream = mdm.createStream('/play/' + game.challenger + '/me');
+          var challenger = new Model();
+          challengerStream.pipe(challenger.createStream()).pipe(challengerStream);
+          ownerOpponent.once('change:online', function() {
+            expect(ownerOpponent.get('online')).to.be.ok;
+            challengerStream.end();
+            ownerOpponent.once('change:online', function () {
+              expect(ownerOpponent.get('online')).not.to.be.ok;
+              done();
+            })
+          });
+        });
+
+        var challenger = new Model();
       }, done);
     });
   });
