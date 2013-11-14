@@ -100,6 +100,6 @@ test('Create game button creates a new game and displays and link to join while 
     models['/play/myTestPlayId/opponent'].set('online', true);
     return wait();
   }).then(function () {
-    ok(!exists('.invite-link'), 'there should not be a link anymore');
+    ok(find('.invite-link').parent().hasClass('invisible'), 'link should be invisible');
   });
 });

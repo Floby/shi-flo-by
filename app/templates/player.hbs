@@ -1,9 +1,5 @@
 <h2>Welcome <span class="text-primary">{{playerId}}</span>! Prepare to play...</h2>
-{{#unless opponent.online}}
-  <p>Invite your opponent at <code class="invite-link">{{inviteUrl}}</code></p>
-{{else}}
-  <p>&nbsp;</p>
-{{/unless}}
+<p {{bindAttr class="opponent.online:invisible"}}>Invite your opponent at <code class="invite-link">{{inviteUrl}}</code></p>
 
 <div class="row">
   <div class="col-md-5 col-md-offset-1 opponent-name">
@@ -66,8 +62,6 @@
   </div>
 </div>
 
-<div class="row">
-  <small>current key down {{currentKeyDown}}</small>
-  <br>
-  <small>Opponent holding down {{opponent.currentKeyDown}}</small>
-</div>
+<span class="hidden">
+  {{currentKeyDown}}
+</span>
