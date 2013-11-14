@@ -68,3 +68,23 @@ test('updates its fingerCount attribute on each frame', function () {
   callbacks['animationFrame']({fingers: []});
   equal(0, source.get('fingerCount'), "we should see 0 fingers");
 });
+
+test('update its currentMove attribute depending on the finger count', function () {
+  expect(4);
+  var callbacks = {};
+  var source = LeapSource.create({
+    controller: {
+      on: function (event, cb) {
+        callbacks[event] = cb;
+      }
+    }
+  });
+  callbacks['animationFrame']({fingers: [1,2]});
+  equal('scissors', source.get('currentMove'), "we should read Scissors");
+  callbacks['animationFrame']({fingers: [1,2,3,4]});
+  equal('paper', source.get('currentMove'), "we should read Paper");
+  callbacks['animationFrame']({fingers: []});
+  equal('rock', source.get('currentMove'), "we should read Rock");
+  callbacks['animationFrame']({fingers: [1,2,3,4,5]});
+  equal('paper', source.get('currentMove'), "we should read Paper");
+});

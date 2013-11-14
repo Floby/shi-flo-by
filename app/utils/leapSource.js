@@ -21,8 +21,21 @@ var LeapSource = Ember.Object.extend({
   onFrame: function (frame) {
     Ember.run(this, function () {
       this.set('fingerCount', frame.fingers.length);
-    })
-  }
+    });
+  },
+
+  currentMove: function () {
+    var count = this.get('fingerCount');
+    if(count === 0) {
+      return 'rock';
+    } else if (count === 2) {
+      return 'scissors';
+    } else if (count > 3) {
+      return 'paper';
+    } else {
+      return null;
+    }
+  }.property('fingerCount')
 });
 
 export default LeapSource;
