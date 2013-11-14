@@ -5,6 +5,7 @@ var initializer = {
   initialize: function (container, application) {
     container.register('adapter:scuttlebutt',  ScuttlebuttAdapter);
     container.injection('route', 'scuttlebutt', 'adapter:scuttlebutt');
+    container.injection('controller', 'scuttlebutt', 'adapter:scuttlebutt');
   }
 };
 

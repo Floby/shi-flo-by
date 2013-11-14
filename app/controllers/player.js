@@ -5,8 +5,10 @@ import pathEqualsConstant from 'appkit/utils/pathEqualsConstant';
 var PlayerController = Ember.ObjectController.extend({
   needs: ['application'],
   playerId: null,
-
-  currentKeyDown: Ember.computed.alias('controllers.application.currentKeyDown'),
+ 
+  currentKeyDown: function () {
+    return this.get('controllers.application.currentKeyDown') 
+  }.property('controllers.application.currentKeyDown'),
 
   observeCurrentKeyDown: function () {
     var model = this.get('me');
@@ -48,17 +50,20 @@ var PlayerController = Ember.ObjectController.extend({
     return this.get('nowPlaying') === this.get('opponentPlaying') && this.get('nowPlaying');
   }.property('nowPlaying', 'opponentPlaying'),
 
+
   init: function () {
-    this.set('scuttlebuttAdapter', ScuttlebuttAdapter.create());
+    this.get('leap.currentMove');
+    this.get('currentKeyDown');
   },
+
   me: function () {
-    var adapter = this.get('scuttlebuttAdapter');
+    var adapter = this.get('scuttlebutt');
     var url = '/' + this.get('playerId') + '/me';
     return adapter.getModelAtUrl(url);
   }.property('playerId'),
 
   opponent: function () {
-    var adapter = this.get('scuttlebuttAdapter');
+    var adapter = this.get('scuttlebutt');
     var url = '/' + this.get('playerId') + '/opponent';
     return adapter.getModelAtUrl(url);
   }.property('playerId')

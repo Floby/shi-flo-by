@@ -1,11 +1,14 @@
 import PlayerController from 'appkit/controllers/player';
+import App from 'appkit/app';
 
 module('Player controller');
 
 test('it exists', function () {
   ok(PlayerController);
   Ember.run(function () {
-    var controller = PlayerController.create();
+    var controller = PlayerController.create({
+      container: App.__container__
+    });
   });
 });
 
