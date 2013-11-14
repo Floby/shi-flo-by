@@ -5,7 +5,12 @@ import pathEqualsConstant from 'appkit/utils/pathEqualsConstant';
 var PlayerController = Ember.ObjectController.extend({
   needs: ['application'],
   playerId: null,
- 
+
+  source: null,
+  observeSource: function () {
+    this.set('me.currentMove', this.get('source.currentMove'));
+  }.observes('source.currentMove'),
+
   currentKeyDown: function () {
     return this.get('controllers.application.currentKeyDown') 
   }.property('controllers.application.currentKeyDown'),

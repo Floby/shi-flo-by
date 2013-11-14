@@ -42,3 +42,18 @@ test('method moveFromKey detects what the currentKeyDown means', function () {
   equal('paper', controller.moveFromKey('P'));
   equal('scissors', controller.moveFromKey('S'));
 });
+
+test('it observes the currentMove property of its source and sets the current value on the `me` model', function () {
+  var me = Ember.Object.create();
+  var source = Ember.Object.create();
+  Ember.run(function () {
+    var controller = PlayerController.create({
+      container: App.__container__,
+      me: me,
+      source: source
+    });
+    ok(!controller.get('currentMove'));
+    source.set('currentMove', 'rock');
+  });
+  equal(me.get('currentMove'), 'rock');
+});
