@@ -3,6 +3,8 @@ import router from 'appkit/router';
 
 import scuttlebuttInitializer from 'appkit/initializers/scuttlebutt';
 Ember.Application.initializer(scuttlebuttInitializer);
+import leapInitializer from 'appkit/initializers/leap';
+Ember.Application.initializer(leapInitializer)
 
 var App = Ember.Application.create({
   LOG_ACTIVE_GENERATION: true,
