@@ -32,3 +32,22 @@ test('Attaches listens to touch events on the DOM elements it is attached to', f
   ok(source.onKeyup.calledOnce, "onKeyup should have been called once");
 });
 
+test('has a currentKeyDown attribute synced with keyboard events', function () {
+  expect(2);
+  var el = document.createElement('div');
+  var source = KeyboardSource.create({
+    el: el
+  });
+
+  var event = jQuery.Event('keydown');
+  event.which = 74;
+  $(el).trigger(event);
+
+  equal('J', source.get('currentKeyDown'));
+
+  event = jQuery.Event('keyup');
+  event.which = 74;
+  $(el).trigger(event);
+
+  equal(null, source.get('currentKeyDown'));
+});
