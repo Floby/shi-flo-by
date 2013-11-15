@@ -11,13 +11,13 @@ var KeyboardSource = Ember.Object.extend({
     var char = String.fromCharCode(event.which).toUpperCase();
     Ember.run(function () {
       self.set('currentKeyDown', char);
-    })
+    });
   },
   onKeyup: function (event) {
     var self = this;
     Ember.run(function () {
       self.set('currentKeyDown', null);
-    })
+    });
   },
 
   currentMove: function () {

@@ -38,7 +38,8 @@
     "before",
     "beforeEach",
     "after",
-    "afterEach"
+    "afterEach",
+    "Leap"
   ],
   "node" : true,
   "browser" : true,

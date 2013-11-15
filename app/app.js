@@ -4,9 +4,9 @@ import router from 'appkit/router';
 import scuttlebuttInitializer from 'appkit/initializers/scuttlebutt';
 Ember.Application.initializer(scuttlebuttInitializer);
 import leapInitializer from 'appkit/initializers/leap';
-Ember.Application.initializer(leapInitializer)
+Ember.Application.initializer(leapInitializer);
 import keyboardInitializer from 'appkit/initializers/keyboard';
-Ember.Application.initializer(keyboardInitializer)
+Ember.Application.initializer(keyboardInitializer);
 
 var App = Ember.Application.create({
   LOG_ACTIVE_GENERATION: true,
