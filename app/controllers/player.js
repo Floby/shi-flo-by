@@ -7,9 +7,14 @@ var PlayerController = Ember.ObjectController.extend({
   playerId: null,
 
   source: function () {
-    return this.get('leap');
-    return this.get('keyboard');
-  }.property(),
+    var leap = this.get('leap.isAvailable');
+    if(leap) {
+      return this.get('leap');
+    }
+    else {
+      return this.get('keyboard');
+    }
+  }.property('leap.isAvailable'),
 
   observeSource: function () {
     this.set('me.currentMove', this.get('source.currentMove'));

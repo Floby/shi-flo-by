@@ -9,13 +9,8 @@ test('Can be instanciated', function () {
   ok(leapSource instanceof Ember.Object, 'leapSource should be an ember object');
 });
 
-test('does not have an offline attribute at creation time', function () {
-  expect(1);
-  var leapSource = LeapSource.create();
-  equal(typeof leapSource.get('offline'), 'undefined');
-});
 
-test('sets an offline flag to true when the leap device disconnects and back to false when it connects', function () {
+test('sets an online flag to false when the leap device disconnects and back to true when it connects', function () {
   expect(2);
   var callbacks = {};
   var leapSource = LeapSource.create({
@@ -27,13 +22,13 @@ test('sets an offline flag to true when the leap device disconnects and back to 
     }
   });
   Ember.run(function () {
-    callbacks['deviceDisconnected']();
+    callbacks['connect']();
   });
-  equal(true, leapSource.get('offline'), 'device is disconnected');
+  equal(true, leapSource.get('online'), 'device is disconnected');
   Ember.run(function () {
-    callbacks['deviceConnected']();
+    callbacks['disconnect']();
   });
-  equal(false, leapSource.get('offline'), 'device is connected');
+  equal(false, leapSource.get('online'), 'device is connected');
 });
 
 test('registers its onFrame method on the controller\'s frame event', function () {
@@ -51,7 +46,7 @@ test('registers its onFrame method on the controller\'s frame event', function (
     }
   });
   Ember.run(function () {
-    callbacks['deviceConnected']();
+    callbacks['connect']();
   });
   callbacks['animationFrame']();
 });
@@ -68,7 +63,7 @@ test('updates its fingerCount attribute on each frame', function () {
     }
   });
   Ember.run(function () {
-    callbacks['deviceConnected']();
+    callbacks['connect']();
   });
   callbacks['animationFrame']({hands: [1], fingers: [1,2]});
   equal(2, source.get('fingerCount'), "we should see 2 fingers");
@@ -90,7 +85,7 @@ test('update its currentMove attribute depending on the finger count', function 
     }
   });
   Ember.run(function () {
-    callbacks['deviceConnected']();
+    callbacks['connect']();
   });
   callbacks['animationFrame']({hands: [1], fingers: [1,2]});
   equal('scissors', source.get('currentMove'), "we should read Scissors");
