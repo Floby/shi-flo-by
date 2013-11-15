@@ -13,6 +13,7 @@ module.exports = {
   },
   server: {
     background: true,
+    browsers: ['Chrome', 'PhantomJS'],
     coverageReporter: {
       type : ['html'],
       dir : 'coverage/'
