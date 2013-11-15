@@ -7,6 +7,7 @@ var PlayerController = Ember.ObjectController.extend({
   playerId: null,
 
   source: function () {
+    return this.get('leap');
     return this.get('keyboard');
   }.property(),
 

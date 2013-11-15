@@ -9,6 +9,7 @@ controller.on('connect', function() {
 
 var LeapSource = Ember.Object.extend({
   controller: controller,
+  fingerCount: 0,
   online: Ember.computed.not('offline'),
 
   init: function () {
@@ -19,11 +20,11 @@ var LeapSource = Ember.Object.extend({
     };
     this.get('controller').on('deviceConnected', function() {
       self.set('offline', false);
-      self.get('controller').on('animationFrame', self._frameHandler);
     });
     this.get('controller').on('deviceDisconnected', function() {
       self.set('offline', true);
     });
+    self.get('controller').on('animationFrame', self._frameHandler);
     if(connected) {
       this.set('offline', false);
     }
