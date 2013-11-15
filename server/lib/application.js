@@ -23,6 +23,7 @@ var initiliazer = module.exports = function (options) {
     server.use(express.static(path.resolve(options.base)));
   });
 
+  // TODO move this elsewhere
   server.param('game_id', function (req, res, next, game_id) {
     try {
       ObjectId.fromString(game_id);
