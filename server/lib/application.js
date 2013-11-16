@@ -19,6 +19,7 @@ var initiliazer = module.exports = function (options) {
       next();
     });
     if(!options.silent) server.use(express.logger('dev'));
+    server.use(express.compress());
     server.use(server.router);
     server.use(express.static(path.resolve(options.base)));
   });
