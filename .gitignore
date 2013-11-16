@@ -8,7 +8,6 @@
 /coverage
 
 # dependencies
-/node_modules
 /vendor/*
 !/vendor/bootstrap
 !/vendor/loader.js
