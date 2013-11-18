@@ -13,6 +13,7 @@ module.exports = function(config) {
       'vendor/npm-modules.js',
       'vendor/leapjs/leap.js',
       'vendor/jquery/jquery.js',
+      'vendor/detectmobilebrowser.js',
       'vendor/handlebars/handlebars.js',
       'vendor/bootstrap/js/bootstrap.js',
       'vendor/ember/index.js',
