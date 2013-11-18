@@ -9,6 +9,10 @@
 
 # dependencies
 /node_modules
+!/node_modules/grunt
+!/node_modules/bower
+!/node_modules/express
+!/node_modules/istanbul
 /vendor/*
 !/vendor/bootstrap
 !/vendor/loader.js
