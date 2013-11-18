@@ -23,7 +23,7 @@ var initiliazer = module.exports = function (options) {
     if(!options.silent) server.use(express.logger('dev'));
     server.use(express.compress());
     server.use(server.router);
-    server.use(express.static(path.resolve(options.base), {maxAge: oneDay}));
+    server.use(express.static(path.resolve(options.base), {maxAge: 10 * oneDay}));
   });
 
   // TODO move this elsewhere
