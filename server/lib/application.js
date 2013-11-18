@@ -6,6 +6,8 @@ var shoe = require('mux-demux-shoe');
 var Model = require('scuttlebutt/model');
 var ObjectId = require('mongoose').Types.ObjectId;
 
+var oneDay = 24 * 60 * 60 * 1000;
+
 
 var initiliazer = module.exports = function (options) {
   // EXPRESS
@@ -21,7 +23,7 @@ var initiliazer = module.exports = function (options) {
     if(!options.silent) server.use(express.logger('dev'));
     server.use(express.compress());
     server.use(server.router);
-    server.use(express.static(path.resolve(options.base)));
+    server.use(express.static(path.resolve(options.base), {maxAge: oneDay}));
   });
 
   // TODO move this elsewhere
