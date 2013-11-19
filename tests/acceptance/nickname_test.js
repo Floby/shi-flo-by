@@ -81,6 +81,6 @@ test('The user cannot validate an empty nickname', function () {
     return click('button.save-nickname');
   }).then(function () {
     ok(find('.nickname-overlay').hasClass('hidden'), 'overlay should be hidden');
-  })
+  });
 });
 
