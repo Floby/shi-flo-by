@@ -8,27 +8,16 @@ Ember.Application.initializer(leapInitializer);
 import keyboardInitializer from 'appkit/initializers/keyboard';
 Ember.Application.initializer(keyboardInitializer);
 
-var Application = Ember.Application.extend({
-  isMobile: function () {
-    return $.browser.mobile;
-  }.property(),
-  isAndroid: function () {
-    if(window.navigator.userAgent.match(/Android/i)) {
-      return true;
-    } else {
-      return false;
-    }
-  }.property()
-});
-
-var App = Application.create({
+var App = Ember.Application.create({
   LOG_ACTIVE_GENERATION: true,
   LOG_VIEW_LOOKUPS: true,
   modulePrefix: 'appkit', // TODO: loaded via config
   Resolver: Resolver,
   Router: Ember.Router.extend({
     router: router
-  })
+  }),
+  isMobile: $.browser.mobile,
+  isAndroid: (/Android/i).test(navigator.userAgent)
 });
 
 export default App;
