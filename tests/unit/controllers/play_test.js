@@ -48,3 +48,23 @@ test('it observes the currentMove property of its source and sets the current va
   });
   equal(me.get('currentMove'), 'rock');
 });
+
+test('if the leap source is available it uses it as its source', function () {
+  expect(2);
+  var leap = Ember.Object.create();
+  var keyboard = Ember.Object.create();
+  var controller;
+  Ember.run(function () {
+    controller = PlayController.create({
+      container: App.__container__,
+      me: Ember.Object.create(),
+      leap: leap,
+      keyboard: keyboard
+    });
+  });
+  equal(keyboard, controller.get('source'), "It should have the keybaord as source at first");
+  Ember.run(function () {
+    leap.set('isAvailable', true);
+  });
+  equal(leap, controller.get('source'), "It should have the keap as source once it is available");
+});
