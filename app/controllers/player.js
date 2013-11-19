@@ -61,6 +61,15 @@ var PlayerController = Ember.ObjectController.extend({
     return adapter.getModelAtUrl(url);
   }.property('playerId'),
 
+  opponentName: function () {
+    var nickname = this.get('opponent.nickname');
+    if(nickname) {
+      return nickname;
+    }
+    else {
+      return 'opponent';
+    }
+  }.property('opponent.nickname'),
 
   actions: {
     saveNickname: function () {
