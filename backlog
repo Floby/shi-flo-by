@@ -1,7 +1,7 @@
 OK As a player, I can create a game and invite someone else to play with me.
 OK enable gzip compression for assets
-KO When playing, I can synchronize with the other player when to make a move so that we see our move simultaneously
-KO As a player I can choose a nickname for all to see
+OK As a player I can choose a nickname for all to see
+KO When playing, I can synchronize with the other player to make a move so that we see our move simultaneously
 KO When a client is creating too many games, the server must refuse it and return a 429 Too Many Requests
 KO As a player I can invite someone else with the share (web)intent
 KO The URL I share for a game must not contain an url fragment
