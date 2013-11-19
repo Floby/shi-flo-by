@@ -58,3 +58,29 @@ test('The user is prompted for his nickname when creating a game', function () {
   });
 });
 
+
+test('The user cannot validate an empty nickname', function () {
+  expect(2);
+
+  var scuttlebuttAdapter = App.__container__.lookup('adapter:scuttlebutt');
+  var models = {};
+  scuttlebuttAdapter.getModelAtUrl = function (url) {
+    var model = ScuttlebuttObject.create();
+    models[url] = model;
+    return model;
+  };
+
+  visit('/play/myPlayId').then(function () {
+    return fillIn('input.nickname', '');
+  }).then(function () {
+    return click('button.save-nickname');
+  }).then(function () {
+    ok(!find('.nickname-overlay').hasClass('hidden'), 'overlay should not be hidden');
+    return fillIn('input.nickname', 'Bobby');
+  }).then(function () {
+    return click('button.save-nickname');
+  }).then(function () {
+    ok(find('.nickname-overlay').hasClass('hidden'), 'overlay should be hidden');
+  })
+});
+

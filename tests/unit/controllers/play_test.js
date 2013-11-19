@@ -68,3 +68,24 @@ test('if the leap source is available it uses it as its source', function () {
   });
   equal(leap, controller.get('source'), "It should have the keap as source once it is available");
 });
+
+test('Its opponentName property is the opponent\'s nickname or "opponent" if he as none', function () {
+  expect(2);
+  var me = Ember.Object.create();
+  var opponent = Ember.Object.create();
+  var controller;
+  Ember.run(function () {
+    controller = PlayController.create({
+      container: App.__container__,
+      content: {
+        me: me,
+        opponent: opponent
+      }
+    });
+  });
+  equal("opponent", controller.get('opponentName'), "It should have 'opponent' as default value");
+  Ember.run(function () {
+    opponent.set('nickname', 'Bobby');
+  });
+  equal("Bobby", controller.get('opponentName'), "It should show the opponent's nickname");
+});
