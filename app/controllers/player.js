@@ -49,18 +49,6 @@ var PlayerController = Ember.ObjectController.extend({
     this.get('source.currentMove');
   },
 
-  me: function () {
-    var adapter = this.get('scuttlebutt');
-    var url = '/' + this.get('playerId') + '/me';
-    return adapter.getModelAtUrl(url);
-  }.property('playerId'),
-
-  opponent: function () {
-    var adapter = this.get('scuttlebutt');
-    var url = '/' + this.get('playerId') + '/opponent';
-    return adapter.getModelAtUrl(url);
-  }.property('playerId'),
-
   opponentName: function () {
     var nickname = this.get('opponent.nickname');
     if(nickname) {
