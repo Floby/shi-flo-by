@@ -59,6 +59,17 @@ var PlayerController = Ember.ObjectController.extend({
     var adapter = this.get('scuttlebutt');
     var url = '/' + this.get('playerId') + '/opponent';
     return adapter.getModelAtUrl(url);
-  }.property('playerId')
+  }.property('playerId'),
+
+
+  actions: {
+    saveNickname: function () {
+      var newNickname = this.get('newNickname');
+      if(!newNickname) {
+        return;
+      }
+      this.set('me.nickname', newNickname);
+    }
+  }
 });
 export default PlayerController;
