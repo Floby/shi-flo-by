@@ -3,6 +3,7 @@ OK enable gzip compression for assets
 OK As a player I can choose a nickname for all to see
 KO When playing, I can synchronize with the other player to make a move so that we see our move simultaneously
 KO When a client is creating too many games, the server must refuse it and return a 429 Too Many Requests
+KO As a player on a mobile device, I can play with the touchscreen
 KO As a player I can invite someone else with the share (web)intent
 KO The URL I share for a game must not contain an url fragment
 KO As a crawler I can see some static HTML markup describing what this is all about
