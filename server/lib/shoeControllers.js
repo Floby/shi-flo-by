@@ -18,6 +18,15 @@ function modelFor (game, role) {
   return models[key];
 }
 
+function refereeFor (game) {
+  var key = game._id + '/referee';
+  if (!models[key]) {
+    var model = models[key] = new Model();
+    model.set('id', game._id);
+  }
+  return models[key];
+}
+
 exports.play = {
   me: function (stream, params) {
     var playId = params.play_id;
@@ -53,6 +62,18 @@ exports.play = {
       else {
         m = modelFor(game, 'owner');
       }
+      var ms = m.createStream();
+      ms.pipe(model.createStream()).pipe(ms);
+    });
+  },
+
+  referee: function (stream, params) {
+    var playId = params.play_id;
+    var model = new Model();
+    stream.pipe(model.createStream()).pipe(stream);
+
+    Game.findByPlayId(playId, function (err, game) {
+      var m = refereeFor(game);
       var ms = m.createStream();
       ms.pipe(model.createStream()).pipe(ms);
     });
