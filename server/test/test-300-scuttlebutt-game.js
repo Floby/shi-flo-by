@@ -182,6 +182,19 @@ describe('Scuttlebutt shoe Server', function () {
         });
       }, done);
     });
+
+    it('exposes a stream for the referee of the game to the challenger of the game', function (done) {
+      trycatch(function () {
+        var refStream = mdm.createStream('/play/' + game.challenger + '/referee');
+        var ref = new Model();
+        refStream.pipe(ref.createStream()).pipe(refStream);
+
+        ref.on('change:id', function() {
+          expect(ref.get('id')).to.equal(game.id);
+          done();
+        });
+      }, done);
+    });
   });
 });
 
