@@ -6,39 +6,39 @@ OCTO-FU-MI
 Install
 -------
 
-  npm install
+    npm install
 
 Test
 ----
 
-  npm test
+    npm test
 
 Build
 -----
 
-  npm run-script build
+    npm run-script build
 
 or
 
-  grunt build:dist
+    grunt build:dist
 
 Run
 ---
 
-  node server [--port PORT (default 8124)] [--base BASEDIR (default tmp/public)] [--database MONGODBURI (default octo-fu-mi)]
+    node server [--port PORT (default 8124)] [--base BASEDIR (default tmp/public)] [--database MONGODBURI (default octo-fu-mi)]
 
 Contribute
 ----------
 
-  grunt server
+    grunt server
 
 or
 
-  grunt test:server
+    grunt test:server
 
 run the node server with node-dev (`npm install -g node-dev`)
 
-  node-dev server
+    node-dev server
 
 LeapMotion
 ----------
