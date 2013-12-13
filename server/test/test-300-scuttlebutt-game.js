@@ -195,6 +195,7 @@ describe('Scuttlebutt shoe Server', function () {
         });
       }, done);
     });
+
   });
 });
 
