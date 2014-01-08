@@ -37,8 +37,11 @@
 				<section>
 					<h1>Node.js Addons</h1>
 					<p>
-						<small>avec node-libspotify</small>
+						avec node-libspotify
 					</p>
+          <aside class="notes">
+            Hello world, notes
+          </aside>
 				</section>
 
                 <section data-background="white" class="presentation">
@@ -64,6 +67,10 @@
                   <li>Peut invoquer directement des fonctions natives d'autres librairies ou du système</li>
                 </ul>
             </p>
+            <aside class="notes">
+              Utilisation de drivers, librairies tierces
+              implementation d'un algorithme plus rapide en C
+            </aside>
           </section>
           <section>
             <h2>Concrètement, ça marche comment ?</h2>
@@ -80,6 +87,9 @@
                 </li>
               </ul>
             </p>
+            <aside class="notes">
+              Une lib dynamique est du code machine avec une table de symboles. Node parcours cette table.
+            </aside>
           </section>
                     <section>
                         <h2>Fonction d'initialisation</h2>
@@ -129,6 +139,11 @@ console.log(addon.hello);
 
 <span class="preprocessor">NODE_MODULE</span>(spotify, init);
             </pre>
+          <aside class="notes">
+            Découpage de l'addon en plusieurs modules.
+            Miroir avec les modules de libspotify<br>
+            noter le namespace NSP
+          </aside>
           </section>
           <section>
             <pre>
@@ -142,6 +157,11 @@ console.log(addon.hello);
 }
 
             </pre>
+            <aside class="notes">
+              NODE_SET_METHOD est une macro C pour construire une fonction JS à partir d'une fonction C et l'attribuer à une objet.<br>
+              nommage des méthodes par libspotify<br>
+              "Voyons en détail ce que fait 'album_name'"
+            </aside>
           </section>
           <section>
             <pre>
@@ -162,6 +182,12 @@ console.log(addon.hello);
 
 
             </pre>
+          <aside class="notes">
+            Expliquer ligne par ligne le fonctionnement de la fonction<br>
+            Expliquer ce qu'est Arguments<br>
+            Gestion de mémoire avec scode.Close <br>
+            Attirer l'attention du ObjectHandle
+          </aside>
           </section>
           <section>
             <h2>ObjectHandle&lt;type&gt; ?</h2>
@@ -171,6 +197,10 @@ console.log(addon.hello);
               <li>Plus adapté à mon cas d'utilisation</li>
             </ul>
           </section>
+          <aside class="notes">
+            Plus adapté parce que libspotify ne fournit que des pointeurs et que ObjectWrap est plus centré
+            autour d'objets et classes. <br>
+          </aside>
         </section>
 
 
@@ -214,10 +244,16 @@ Album.getFromUrl(spotifyUrl).whenReady(<span class="keyword">function</span> () 
               <br>
               Il faut parfoit temporiser des données
             </p>
+            <aside class="notes">
+              Un des nombreux écueils lorsqu'on dévéloppe des addons natifs
+            </aside>
           </section>
           <section>
           	<h3>music_delivery</h3>
             <img src="./images/async_queue.png" alt="" />
+            <aside class="notes">
+              Je vous montrerai le code à la fin si vous êtes sages
+            </aside>
           </section>
         </section>
 
@@ -286,6 +322,9 @@ Album.getFromUrl(spotifyUrl).whenReady(<span class="keyword">function</span> () 
         	<section>
         		<h2>Tests</h2>
             <code class="fragment">npm test</code>
+            <aside class="notes">
+              Attention, surprise ! c'est simple !
+            </aside>
         	</section>
           <section>
             <small>
@@ -357,6 +396,11 @@ Lines        : 85.71% ( 384/448 )
               <li>Tester l'interface JS</li>
               <li>Utiliser les outils C/C++ que Node.js fournit</li>
             </ul>
+            <aside class="notes">
+              QUE DE LA GLUE<br>
+              Les Baby steps de TDD forcent à avoir le minimum de glue possibleO<br>
+              Node.js fournit des macro est des classes pour aider au développement d'addons<br>
+            </aside>
           </section>
           <section>
             <h2>Difficultés courantes</h2>
@@ -374,6 +418,10 @@ Lines        : 85.71% ( 384/448 )
             	<li>Abstraction en C plutôt que C++</li>
             	<li>Une réécriture complète de la totalité des modules natifs !</li>
             </ul>
+            <aside class="notes">
+              mentionner module-foundry de nodejitsu<br>
+              You're gonna rewrite it anyway. Ils ne veulent plus subir les changements d'API de v8
+            </aside>
           </section>
           <section>
           	<h2>Démo / Questions</h2>
