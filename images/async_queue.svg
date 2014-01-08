@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400"
+   height="300"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   inkscape:export-filename="/home/floby/octo/prez/node-libspotify/images/async_queue.png"
+   inkscape:export-xdpi="135"
+   inkscape:export-ydpi="135"
+   sodipodi:docname="async_queue.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3850"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="155.22617"
+     inkscape:cy="116.01849"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-752.36218)">
+    <g
+       id="g3022"
+       transform="translate(-8.9285714,-17.142857)">
+      <rect
+         y="792.99219"
+         x="25.630014"
+         height="30.882824"
+         width="126.5008"
+         id="rect2985"
+         style="fill:#fff6d5;fill-opacity:1;stroke:#d7d7d7;stroke-width:0.83146065;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <flowRoot
+         transform="matrix(0.33636937,0,0,0.33636937,21.124482,763.95373)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+         id="flowRoot2987"
+         xml:space="preserve"><flowRegion
+           id="flowRegion2989"><rect
+             y="102.85714"
+             x="52.857143"
+             height="55.714283"
+             width="305.71429"
+             id="rect2991" /></flowRegion><flowPara
+           id="flowPara2993">music_delivery</flowPara></flowRoot>    </g>
+    <rect
+       style="fill:#d7eef4;fill-opacity:1;stroke:#d7d7d7;stroke-width:0.8853429;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3029"
+       width="90.714287"
+       height="123.17361"
+       x="285"
+       y="834.50507" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.98013019999999962px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#828282;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+       x="317.87268"
+       y="831.25555"
+       id="text3799"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3801"
+         x="317.87268"
+         y="831.25555">fifo</tspan></text>
+    <rect
+       y="972.46228"
+       x="16.743029"
+       height="30.085367"
+       width="157.13191"
+       id="rect3805"
+       style="fill:#afe9c6;fill-opacity:1;stroke:#d7d7d7;stroke-width:0.91463208;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <flowRoot
+       transform="matrix(0.33636937,0,0,0.33636937,12.83672,942.66802)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+       id="flowRoot3807"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3809"><rect
+           y="102.85714"
+           x="52.857143"
+           height="57.837803"
+           width="428.87823"
+           id="rect3811" /></flowRegion><flowPara
+         id="flowPara3813">call_music_callback</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#828282;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 144.71429,788.07647 167.85714,43.57142"
+       id="path3841"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#828282;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="M 327.14286,962.36218 188.57143,989.50504"
+       id="path4287"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#828282;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 292.85714,868.07646 71.42858,0"
+       id="path4513"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4515"
+       d="m 292.85714,899.40979 71.42858,0"
+       style="fill:none;stroke:#828282;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#828282;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 292.85714,930.74312 71.42858,0"
+       id="path4517"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#d7d7d7;stroke-width:0.91463207999999996;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4569"
+       width="157.13191"
+       height="30.085367"
+       x="16.743029"
+       y="1002.4623" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4571"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+       transform="matrix(0.33636937,0,0,0.33636937,17.693724,972.66802)"><flowRegion
+         id="flowRegion4573"><rect
+           id="rect4575"
+           width="428.87823"
+           height="57.837803"
+           x="52.857143"
+           y="102.85714" /></flowRegion><flowPara
+         id="flowPara4577">onMusicDelivery()</flowPara></flowRoot>  </g>
+</svg>

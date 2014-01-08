@@ -24,6 +24,7 @@
   box-shadow: none;
 }
 
+section strong,
 section pre .code ,
 section code {
   color:#e7ad52;
@@ -31,4 +32,8 @@ section code {
 
 section code .comment {
   color: #999
+}
+
+.reveal section img {
+  border: none;
 }

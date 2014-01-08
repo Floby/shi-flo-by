@@ -194,9 +194,195 @@ Album.<span class="keyword">prototype</span>._populateAttributes = <span class="
     <span class="code">this</span>.type = b.album_type(this._sp_object);
     <span class="code">this</span>.artist = <span class="keyword">new</span> sp.Artist(b.album_artist(this._sp_object));
 };
+<span class="comment">// ...</span>
 
+Album.getFromUrl(spotifyUrl).whenReady(<span class="keyword">function</span> () {
+  <span class="code">this</span>.name;
+  <span class="code">this</span>.year;
+  <span class="code">this</span>.type;
+});
 
             </pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Multithreading</h2>
+            <p>
+              <strong>Un seul thread n'a accès à JavaScript</strong>
+              <br>
+              Il faut parfoit temporiser des données
+            </p>
+          </section>
+          <section>
+          	<h3>music_delivery</h3>
+            <img src="./images/async_queue.png" alt="" />
+          </section>
+        </section>
+
+        <section>
+        	<section>
+        		<h2>Compilation</h2>
+        	</section>
+
+          <section>
+          	<p>binding.gyp</p>
+            <pre>
+{
+  "targets": [
+    {
+      "target_name": "libspotify",
+      "sources": [
+        "src/mon_addon.cc",
+      ]
+    }
+  ]
+}
+            </pre>
+            <ul>
+              <li class="fragment">Le nom de l'addon compilé</li>
+              <li class="fragment">La liste des fichiers sources</li>
+              <li class="fragment">La liste des dépendances, s'il y en a</li>
+              <li class="fragment">Plein d'autres options...</li>
+            </ul>
+          </section>
+          <section>
+            <pre>
+{
+  "targets": [
+    {
+      "target_name": "libspotify",
+      "sources": [
+        "src/album.cc",
+        "src/artist.cc",
+        "src/audio.cc",
+        "src/binding.cc",
+        "src/link.cc",
+        "src/player.cc",
+        "src/search.cc",
+        "src/session.cc",
+        "src/track.cc",
+        "src/playlist.cc"
+      ],
+      "cflags": ["-Wall"],
+      "conditions" : [
+        [
+          'OS!="win"', {
+            "libraries" : [
+              '-lspotify'
+            ],
+          }
+        ]
+      ]
+    }
+  ]
+}
+            </pre>
+          </section>
+        </section>
+
+        <section>
+        	<section>
+        		<h2>Tests</h2>
+            <code class="fragment">npm test</code>
+        	</section>
+          <section>
+            <small>
+              <pre>
+test-000-config.js
+✔ testInstanciatingSessionWithNoArgumentThrows
+✔ testInstanciatingSessionWithKey
+
+test-010-session01-instance.js
+✔ testInstanciatingSessionWithAppKeyPath
+✔ testOnlyOneSession
+✔ testStopSession
+
+test-010-session02-login.js
+✔ testLoginDoesntThrow
+trying to login, this may take a while
+✔ testLoginIsSucessful
+
+test-020-search-01-create.js
+✔ search - testSearchFromString
+✔ search - testSearchGuillemotsSongFound
+
+test-020-search-02-process.js
+✔ testGetTrackFromSearchResult
+
+test-030-track.js
+✔ track - attributes are mapped
+
+test-050-player00-track.js
+playing track, this may take some time
+✔ testPlaySingleAlJArreauTrack
+
+test-031-album.js
+✔ album - attributes are mapped
+✔ album - cover image - default size
+✔ album - cover image - normal size (function)
+✔ album - cover image - small size (string)
+✔ album - cover image - large size (constant)
+✔ album - cover image - unknown size
+(...)
+test-080-playlist.js
+✔ playlist - get playlist from URI
+✔ playlist - attributes are mapped
+✔ playlist - get tracks
+
+test-999-cleanup.js
+✔ Not actually a test, just cleaning up
+
+<span class="code">OK</span>: 115 assertions (24709ms)
+================== Coverage summary ==================
+Statements   : 84.43% ( 396/469 )
+Branches     : 74.55% ( 82/110 )
+Functions    : 72.63% ( 69/95 )
+Lines        : 85.71% ( 384/448 )
+======================================================
+              </pre>
+            </small>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Pour finir</h2>
+          </section>
+          <section>
+          	<h2>Conseils : KISS</h2>
+            <ul>
+              <li>Mapping le plus minimal possible JS &lt;-&gt; C/C++</li>
+              <li>TDD pour maîtriser la complexité</li>
+              <li>Tester l'interface JS</li>
+              <li>Utiliser les outils C/C++ que Node.js fournit</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Difficultés courantes</h2>
+            <ul>
+            	<li>Le langage</li>
+            	<li>La compilation multi-plateforme</li>
+            	<li>Les segfaults !</li>
+            	<li>Le mutlithreading</li>
+            </ul>
+          </section>
+          <section>
+          	<h2>Ce qui vient</h2>
+            <ul>
+            	<li>Modules précompilés</li>
+            	<li>Abstraction en C plutôt que C++</li>
+            	<li>Une réécriture complète de la totalité des modules natifs !</li>
+            </ul>
+          </section>
+          <section>
+          	<h2>Démo / Questions</h2>
+            <p>Merci beaucoup !</p>
+            <ul>
+              <li>Github: <a href="http://github.com/Floby">http://github.com/Floby</a></li>
+              <li>Twitter: <a href="http://twitter.com/floby">http://twitter.com/floby</a></li>
+              <li>Spotify: <a href="http://open.spotify.com/user/flobyiv">http://open.spotify.com/user/flobyiv</a></li>
+            </ul>
           </section>
         </section>
       </div>
