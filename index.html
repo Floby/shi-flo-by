@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Quickie Node.js</title>
+		<title>Node.js addons</title>
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -35,250 +35,171 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Quickie Node.js</h1>
+					<h1>Node.js Addons</h1>
 					<p>
-						<small>Et ce qui est quand même plutôt cool avec</small>
+						<small>avec node-libspotify</small>
 					</p>
 				</section>
 
-                <section>
-                    <h2>Qu'est-ce que c'est ?</h2>
+                <section data-background="white" class="presentation">
+                    <h2>Qui suis-je ?</h2>
+                    <h4 class="florent-name">Florent Jaby</h4>
                     <p>
                         <ul>
-                            <li>Plateforme pour éxecuter du Javascript (Google V8)</li>
-                            <li>Accès au système de fichiers et au réseau</li>
-                            <li>Langage haut niveau pour accès bas niveau</li>
+                            <li>Consultant pour OCTO Technology</li>
+                            <li>Nodeur depuis 2009</li>
+                            <li>Auteur de <a href="http://github.com/Floby/node-libspotify">node-libspotify</a></li>
                         </ul>
                     </p>
+                    <img src="images/octo-logo.png" alt="OCTO Technology" class="octo-logo pull-right" />
                 </section>
 
-				<section>
-					<h2>Ce qui est nul avec node.js</h2>
-					<p>
-                        <ul>
-                        	<li class="fragment">Langage interprêté</li>
-                        	<li class="fragment">Javascript en plus !</li>
-                        	<li class="fragment">Style asynchrone difficile</li>
-                        </ul>
-					</p>
-				</section>
-				<section>
-                    <h2>Ce qui est cool avec node.js</h2>
-					<p>
-                        <ul>
-                        	<li class="fragment">Langage interprêté</li>
-                        	<li class="fragment">Javascript en plus !</li>
-                        	<li class="fragment">Les I/O évènementielles</li>
-                        </ul>
-					</p>
-				</section>
-
-				<section>
-                    <h2>Ce qui est encore plus cool avec node.js</h2>
-					<p>
-                        <ul>
-                        	<li class="fragment">NPM : Node Package Manager</li>
-                        	<li class="fragment">Communauté d'experts innovante</li>
-                        	<li class="fragment">Déploiement facile localement et dans le cloud</li>
-                        </ul>
-					</p>
-				</section>
-
-                <section>
+        <section>
+          <section>
+            <h2>Qu'est-ce qu'un addon ?</h2>
+            <p>
+                <ul>
+                  <li>Un module node.js écrit en C/C++ au lieu de JS</li>
+                  <li>Un module node.js compilé</li>
+                  <li>Peut invoquer directement des fonctions natives d'autres librairies ou du système</li>
+                </ul>
+            </p>
+          </section>
+          <section>
+            <h2>Concrètement, ça marche comment ?</h2>
+            <p>
+              <ul>
+                <li>
+                  Une librairie dynamique en <code>.node</code> au lieu de <code>.so</code> ou <code>.dll</code>
+                </li>
+                <li>
+                  Node.js charge la librairie avec <code>dlopen()</code> lorsque l'on appelle <code>require('module.node')</code>
+                </li>
+                <li>
+                  Node.js trouve le symbole du même nom avec <code>dlsym()</code> et éxecute la fonction d'initialisation
+                </li>
+              </ul>
+            </p>
+          </section>
                     <section>
-                        <h2>Hello World</h2>
+                        <h2>Fonction d'initialisation</h2>
                         <pre>
-                            console.log('Hello World!');
+<span class="code">void</span> init (Handle &lt;Object&gt; exports) {
+  exports->Set(String::NewSymbol(<span class="code">"hello"</span>), String::New(<span class="code">"world"</span>))
+}
+
+NODE_MODULE(<span class="code">hello</span>, init)
                         </pre>
                     </section>
                     <section>
-                        <h2>Hello World : dirty</h2>
-                        <pre>
-                            process.stdout.end('Hello World!\n');
-                        </pre>
+                      <h2>Utilisation</h2>
+                      <pre>
+<span class="code">var</span> addon = require(<span class="code">'hello.node'</span>);
+console.log(addon.hello);
+<span class="comment">// "world"</span>
+                      </pre>
                     </section>
-                    <section>
-                        <h2>Hello World : async</h2>
-                        <pre>
-                            setTimeout(function () {
-                                process.stdout.end('World!\n');
-                            }, 500);
-                            process.stdout.write('Hello ');
-                        </pre>
-                    </section>
-                    <section>
-                        <h2>Hello World : http</h2>
-                        <pre>
-                            var http = require('http');
-                            http.createServer(function (req, res) {
-                                res.end('Hello World!\n');
-                            }).listen(8080);
-                        </pre>
-                    </section>
-                </section>
+        </section>
 
-                <section>
-                    <section>
-                        <h2>Streams !</h2>
-                        <pre>
-                            var http = require('http');
-                            var fs = require('fs');
+        <section>
+          <section>
+            <h2>Dans node-libspotify</h2>
+          </section>
+          <section>
+            <pre>
+<span class="keyword">extern</span> <span class="code">"C"</span> {
+  <span class="keyword">void</span> init (v8::Handle&lt;v8::Object&gt; target)
+  {
+    v8::HandleScope scope;
 
-                            http.createServer(function (req, res) {
-                                fs.createReadStream('myfile.txt').pipe(res);
-                            }).listen(8080);
-                        <pre>
-                    </section>
-                    <section>
-                        <h2>Transform Streams !</h2>
-                        <pre>
-                            var http = require('http');
-                            var fs = require('fs');
-                            var zlib = require('zlib');
+    <span class="comment">// initializing all modules</span>
+    nsp::init_album(target);
+    nsp::init_artist(target);
+    nsp::init_link(target);
+    nsp::init_player(target);
+    nsp::init_search(target);
+    nsp::init_session(target);
+    nsp::init_track(target);
+    nsp::init_playlistcontainer(target);
+    nsp::init_playlist(target);
 
-                            http.createServer(function (req, res) {
-                                fs.createReadStream('myfile.txt')
-                                  .pipe(zlib.Gzip())
-                                  .pipe(res);
-                            }).listen(8080);
-                        <pre>
-                    </section>
-                </section>
-                
-                <section>
-                	<section>
-                		<h2>3 modules utiles</h2>
-                        <h3>Express : Serveur web</h3>
-                        <pre>
-                            var express = require('express');
-
-                            var app = express();
-
-                            app.use(express.logger())
-                               .use(express.cookieParser())
-                               .use(express.session())
-                               .use(express.bodyParser)
-                               .use(express.router());
-
-                            app.get('/users/:user_id', function (req, res, next) {
-                              userExists(req.params.user_id, function (exist) {
-                                if(exist) {
-                                  res.end('Hello');
-                                }
-                                else {
-                                  next();
-                                }
-                              })
-                            });
-                        </pre>
-                	</section>
-                	<section>
-                		<h2>3 modules utiles</h2>
-                        <h3>Dnode : RPC/RMI</h3>
-                        <small class="pull-right">Serveur</small>
-                        <pre>
-var dnode = require('dnode');
-dnode({
-  transform : function (s, cb) {
-    cb(s.replace(/[aeiou]{2,}/, 'oo').toUpperCase())
   }
-}).listen(5004);
+}
 
-</pre>
-<hr/>
-                        <small class="pull-right">Client</small>
-<pre>
-var d = dnode.connect(5004);
-d.on('remote', function (remote) {
-  remote.transform('beep', function (s) {
-    console.log('beep => ' + s);
-    d.end();
-  });
-})
-                        </pre>
-                	</section>
-                	<section>
-                		<h2>3 modules utiles</h2>
-                        <h3>Socket.io : Websockets faciles</h3>
-                        <small class="pull-right">Serveur</small>
-                        <pre>
-var io = require('socket.io').listen(80);
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-</pre>
-<hr/>
-                        <small class="pull-right">Client</small>
-<pre>
-var socket = io.connect('http://localhost');
-socket.on('news', function (data) {
-  console.log(data);
-  socket.emit('my other event', { my: 'data' });
-});
-                        </pre>
-                	</section>
-                </section>
-                <section>
-                	<h2>Ma dernière trouvaille</h2>
-                    <h3>Scuttlebutt : Réplication multi-master</h3>
-                </section>
-                <section>
-                    <h2>Réplication sur configuration variable</h2>
-                    <img src="images/scuttlebutt.png" style="border:none; background: none" />
-                    <p>
-                        <small><em>Eventual Consistency</em> sur tous les nœuds</small>
-                    </p>
-                </section>
-                <section>
-                    <h2>Mise en place en quelques lignes de code</h2>
-                    <br>
-                    <small class="pull-right">Serveur</small>
-                    <pre>
-var Doc = require('crdt').Doc
+<span class="preprocessor">NODE_MODULE</span>(spotify, init);
+            </pre>
+          </section>
+          <section>
+            <pre>
+<span class="keyword">void</span> nsp::init_album(Handle&lt;Object&gt; target) {
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_is_loaded"</span>, Album_Is_Loaded);
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_name"</span>, Album_Name);
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_year"</span>, Album_Year);
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_type"</span>, Album_Type);
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_artist"</span>, Album_Artist);
+  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_cover"</span>, Album_Cover);
+}
 
-var A = new Doc()
+            </pre>
+          </section>
+          <section>
+            <pre>
+<span class="keyword">static</span> Handle&lt;Value&gt; Album_Name(<span class="keyword">const</span> Arguments<span class="code">&</span> args) {
+  HandleScope scope;
 
-net.createServer(function (stream) {
-  stream
-    .pipe(A.createStream())
-    .pipe(stream)
-})
-</pre>
-<hr/>
-                    <small class="pull-right">Client</small>
-<pre>
-var Doc = require('crdt').Doc
+  <span class="comment">// test arguments sanity</span>
+  assert(args.Length() == <span class="number">1</span>);
+  assert(args[<span class="number">0</span>]-&gt;IsObject());
 
-var A = new Doc()
+  <span class="comment">// gets sp_album pointer from given object</span>
+  ObjectHandle&lt;sp_album&gt;<span class="code">*</span> album = ObjectHandle&lt;sp_album&gt;::Unwrap(args[<span class="number">0</span>]);
 
-var stream
-(stream = net.connect())
-  .pipe(A.createStream())
-  .pipe(stream);
+  <span class="keyword">const</span> char<span class="code">*</span> name = sp_album_name(album-&gt;pointer);
 
-A.add({
-    name: 'Hello'
-})
-                    </pre>
-                </section>
-                <section>
-                    <h2>Devinettes</h2>
-                    <p>
-                        <em>Quelles entreprises utilisent Node.js en production ?</em>
-                    </p>
-                    <br>
-                    <ul>
-                    	<li class="fragment">Github : Création et envoi des fichiers tar/zip</li>
-                    	<li class="fragment">Myspace : Application Web Express.js + Websockets</li>
-                    	<li class="fragment">LinkedIn : API REST pour application mobile</li>
-                    </ul>
-                </section>
+  <span class="keyword">return</span> scope.Close(String::New(name));
+}
 
-			</div>
+
+            </pre>
+          </section>
+          <section>
+            <h2>ObjectHandle&lt;type&gt; ?</h2>
+            <ul>
+              <li>Stocke un pointeur dans un objet JS</li>
+              <li>Similaire à <code>ObjectWrap</code> inclu dans node.h</li>
+              <li>Plus adapté à mon cas d'utilisation</li>
+            </ul>
+          </section>
+        </section>
+
+
+        <section>
+        	<section>
+        		<h2>Utilisation depuis JavaScript</h2>
+        	</section>
+          <section>
+            <pre>
+<span class="keyword">var</span> b = require(<span class="code">'bindings'</span>)(<span class="code">'spotify.node'</span>);
+
+<span class="keyword">function</span> Album (sp_album) {
+    <span class="code">this</span>._sp_object = sp_album;
+    SpObject.apply(<span class="code">this</span>);
+}
+util.inherits(Album, SpObject);
+
+Album.<span class="keyword">prototype</span>._populateAttributes = <span class="keyword">function</span> _populateAttributes() {
+    <span class="code">this</span>.name = b.album_name(this._sp_object);
+    <span class="code">this</span>.year = b.album_year(this._sp_object);
+    <span class="code">this</span>.type = b.album_type(this._sp_object);
+    <span class="code">this</span>.artist = <span class="keyword">new</span> sp.Artist(b.album_artist(this._sp_object));
+};
+
+
+            </pre>
+          </section>
+        </section>
+      </div>
 
 		</div>
 

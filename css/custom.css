@@ -1,5 +1,34 @@
 
+.pull-left {
+  display: inline-block;
+  float: left;
+}
 .pull-right {
   display: inline-block;
   float: right;
+}
 
+.reveal img.octo-logo {
+  max-width: 15%;
+}
+
+
+.presentation,
+.presentation h4,
+.presentation h2 {
+  color: black;
+}
+
+.reveal section.presentation img {
+  border: none;
+  box-shadow: none;
+}
+
+section pre .code ,
+section code {
+  color:#e7ad52;
+}
+
+section code .comment {
+  color: #999
+}
