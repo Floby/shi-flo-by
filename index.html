@@ -214,335 +214,126 @@ socket.on(<span class="code">'readable'</span>, <span class="keyword">function</
 <span class="comment">// ...</span>
 
 <span class="keyword">var</span> gzip = zlib.createGzip();
+
 process.stdin
   .pipe(gzip)
   .pipe(process.stdout);
 </pre>
           </section>
-        </section>
-
-        <section>
           <section>
-            <h2>Dans node-libspotify</h2>
-          </section>
-          <section>
+            <h3>pipe ?</h3>
+            <p>Avec un flux en écriture et en lecture, on peut chaîner les redirections de flux</p>
             <pre>
-<span class="keyword">extern</span> <span class="code">"C"</span> {
-  <span class="keyword">void</span> init (v8::Handle&lt;v8::Object&gt; target)
-  {
-    v8::HandleScope scope;
+http.createServer(<span class="keyword">function</span> (req, res) {
+  <span class="keyword">var</span> busboy = <span class="code">new</span> Busboy({ <span class="keyword">headers</span>: req.headers });
+  <span class="keyword">var</span> pack = tar.pack();
+  <span class="keyword">var</span> gzip = zlib.createGzip();
 
-    <span class="comment">// initializing all modules</span>
-    nsp::init_album(target);
-    nsp::init_artist(target);
-    nsp::init_link(target);
-    nsp::init_player(target);
-    nsp::init_search(target);
-    nsp::init_session(target);
-    nsp::init_track(target);
-    nsp::init_playlistcontainer(target);
-    nsp::init_playlist(target);
+  busboy
+    .on(<span class="code">'file'</span>, <span class="keyword">function</span> (field, stream, filename) {
+      <span class="keyword">var</span> entry = tar.entry({<span class="keyword">name</span>: filename});
+      filename.<span class="number">pipe</span>(entry);
+    })
+    .on(<span class="code">'finish'</span>, <span class="keyword">function</span> () {
+      pack.finalize();
+    });
 
-  }
-}
-
-
-<span class="preprocessor">NODE_MODULE</span>(spotify, init);
-            </pre>
-          <aside class="notes">
-            Découpage de l'addon en plusieurs modules.
-            Miroir avec les modules de libspotify<br>
-            noter le namespace NSP
-          </aside>
+  req.<span class="number">pipe</span>(busboy);
+  pack.<span class="number">pipe</span>(gzip).<span class="number">pipe</span>(res);
+}).listen(<span class="number">80</span>);
+<pre>
           </section>
           <section>
-            <pre>
-<span class="keyword">void</span> nsp::init_album(Handle&lt;Object&gt; target) {
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_is_loaded"</span>, Album_Is_Loaded);
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_name"</span>, Album_Name);
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_year"</span>, Album_Year);
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_type"</span>, Album_Type);
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_artist"</span>, Album_Artist);
-  <span class="preprocessor">NODE_SET_METHOD</span>(target, <span class="code">"album_cover"</span>, Album_Cover);
-}
-
-            </pre>
-            <aside class="notes">
-              NODE_SET_METHOD est une macro C pour construire une fonction JS à partir d'une fonction C et l'attribuer à une objet.<br>
-              nommage des méthodes par libspotify<br>
-              "Voyons en détail ce que fait 'album_name'"
-            </aside>
-          </section>
-          <section>
-            <pre>
-<span class="keyword">static</span> Handle&lt;Value&gt; Album_Name(<span class="keyword">const</span> Arguments<span class="code">&</span> args) {
-  HandleScope scope;
-
-  <span class="comment">// test arguments sanity</span>
-  assert(args.Length() == <span class="number">1</span>);
-  assert(args[<span class="number">0</span>]-&gt;IsObject());
-
-  <span class="comment">// gets sp_album pointer from given object</span>
-  ObjectHandle&lt;sp_album&gt;<span class="code">*</span> album = ObjectHandle&lt;sp_album&gt;::Unwrap(args[<span class="number">0</span>]);
-
-  <span class="keyword">const</span> char<span class="code">*</span> name = sp_album_name(album-&gt;pointer);
-
-  <span class="keyword">return</span> scope.Close(String::New(name));
-}
-
-
-            </pre>
-          <aside class="notes">
-            Expliquer ligne par ligne le fonctionnement de la fonction<br>
-            Expliquer ce qu'est Arguments<br>
-            Gestion de mémoire avec scode.Close <br>
-            Attirer l'attention du ObjectHandle
-          </aside>
-          </section>
-          <section>
-            <h2>ObjectHandle&lt;type&gt; ?</h2>
+            <p>En tant qu'utilisateur de la classe Stream :</p>
             <ul>
-              <li>Stocke un pointeur dans un objet JS</li>
-              <li>Similaire à <code>ObjectWrap</code> inclu dans node.h</li>
-              <li>Plus adapté à mon cas d'utilisation</li>
+              <li class="fragment">Utilisez la méthode <code>pipe()</code></li>
+              <li class="fragment">Si vous utilisez les autres, vous devriez écrire votre propre stream</li>
             </ul>
           </section>
-          <aside class="notes">
-            Plus adapté parce que libspotify ne fournit que des pointeurs et que ObjectWrap est plus centré
-            autour d'objets et classes. <br>
-          </aside>
-        </section>
-
-
-        <section>
-        	<section>
-        		<h2>Utilisation depuis JavaScript</h2>
-        	</section>
-          <section>
-            <pre>
-<span class="keyword">var</span> b = require(<span class="code">'bindings'</span>)(<span class="code">'spotify.node'</span>);
-
-<span class="keyword">function</span> Album (sp_album) {
-    <span class="code">this</span>._sp_object = sp_album;
-    SpObject.apply(<span class="code">this</span>);
-}
-util.inherits(Album, SpObject);
-
-Album.<span class="keyword">prototype</span>._populateAttributes = <span class="keyword">function</span> _populateAttributes() {
-    <span class="code">this</span>.name = b.album_name(this._sp_object);
-    <span class="code">this</span>.year = b.album_year(this._sp_object);
-    <span class="code">this</span>.type = b.album_type(this._sp_object);
-    <span class="code">this</span>.artist = <span class="keyword">new</span> sp.Artist(b.album_artist(this._sp_object));
-};
-<span class="comment">// ...</span>
-
-Album.getFromUrl(spotifyUrl).whenReady(<span class="keyword">function</span> () {
-  <span class="code">this</span>.name;
-  <span class="code">this</span>.year;
-  <span class="code">this</span>.type;
-});
-
-            </pre>
-          </section>
         </section>
 
         <section>
-          <section>
-            <h2>Multithreading</h2>
-            <p>
-              <strong>Un seul thread n'a accès à JavaScript</strong>
-              <br>
-              Il faut parfoit temporiser des données
-            </p>
-            <aside class="notes">
-              Un des nombreux écueils lorsqu'on dévéloppe des addons natifs
-            </aside>
-          </section>
-          <section>
-          	<h3>music_delivery</h3>
-            <img src="./images/async_queue.png" alt="" />
-            <aside class="notes">
-              Je vous montrerai le code à la fin si vous êtes sages
-            </aside>
-          </section>
+          <h4>objectMode</h4>
+        	<p>Les streams peuvent en réalité aussi transporter des objets serialisés en JSON</p>
         </section>
 
         <section>
         	<section>
-        		<h2>Compilation</h2>
+        		<h3>Des usages cools</h3>
         	</section>
 
           <section>
-          	<p>binding.gyp</p>
-            <pre>
-{
-  "targets": [
-    {
-      "target_name": "libspotify",
-      "sources": [
-        "src/mon_addon.cc",
-      ]
-    }
-  ]
-}
-            </pre>
+            <h4>Logging structuré : <strong>Bunyan</strong></h4>
             <ul>
-              <li class="fragment">Le nom de l'addon compilé</li>
-              <li class="fragment">La liste des fichiers sources</li>
-              <li class="fragment">La liste des dépendances, s'il y en a</li>
-              <li class="fragment">Plein d'autres options...</li>
+            	<li>Logging d'objets plutôt que de lignes</li>
+              <li>Indépendant du transport</li>
+              <li>Peut passer par plusieurs étapes de traitement</li>
+              <li>Peut être stocké sur n'importe quel support</li>
             </ul>
           </section>
+
           <section>
-            <pre>
-{
-  "targets": [
-    {
-      "target_name": "libspotify",
-      "sources": [
-        "src/album.cc",
-        "src/artist.cc",
-        "src/audio.cc",
-        "src/binding.cc",
-        "src/link.cc",
-        "src/player.cc",
-        "src/search.cc",
-        "src/session.cc",
-        "src/track.cc",
-        "src/playlist.cc"
-      ],
-      "cflags": ["-Wall"],
-      "conditions" : [
-        [
-          'OS!="win"', {
-            "libraries" : [
-              '-lspotify'
-            ],
-          }
-        ]
-      ]
-    }
-  ]
-}
-            </pre>
+            <h4>WebSockets : <strong>Shoe</strong></h4>
+            <ul>
+              <li>Interface <em>Stream</em> pour les websockets sur le client et le serveur</li>
+              <li>Fallbacks sur du polling pour les navigateurs incompatibles</li>
+              <li class="fragment">J'ai testé, ça marche !</li>
+            </ul>
           </section>
+
+          <section>
+            <h4>RPC : <strong>DNode</strong></h4>
+            <ul>
+            	<li>RPC agnostique au transport</li>
+              <li>Support des callbacks de manière transparente</li>
+              <li>Fonctionne même dans le navigateur !</li>
+            </ul>
+            <br>
+            <br>
+            <p>Introduction du pattern &nbsp;<code>A.pipe(B).pipe(A)</code></p>
+          </section>
+
+          <section>
+            <h4>Replication multi-master : <strong>Scuttlebutt</strong></h4>
+            <ul>
+            	<li>Une implémentation simple du protocole Gossip</li>
+              <li>Agnostique au transport</li>
+              <li>extensible à plusieurs types de données</li>
+              <li>fonctionne aussi dans le navigateur !</li>
+            </ul>
+            <br>
+            <br>
+            <p>Utilisation du pattern &nbsp;<code>A.pipe(B).pipe(A)</code></p>
+          </section>
+
+          <section>
+            <h4>Manipulation de BDD : <strong>LevelDB</strong></h4>
+            <ul>
+            	<li>Read/Write par streams</li>
+              <li>Map/Reduce par streams</li>
+              <li>Filter par streams</li>
+            </ul>
+          </section>
+
         </section>
 
         <section>
-        	<section>
-        		<h2>Tests</h2>
-            <code class="fragment">npm test</code>
-            <aside class="notes">
-              Attention, surprise ! c'est simple !
-            </aside>
-        	</section>
-          <section>
-            <small>
-              <pre>
-test-000-config.js
-✔ testInstanciatingSessionWithNoArgumentThrows
-✔ testInstanciatingSessionWithKey
-
-test-010-session01-instance.js
-✔ testInstanciatingSessionWithAppKeyPath
-✔ testOnlyOneSession
-✔ testStopSession
-
-test-010-session02-login.js
-✔ testLoginDoesntThrow
-trying to login, this may take a while
-✔ testLoginIsSucessful
-
-test-020-search-01-create.js
-✔ search - testSearchFromString
-✔ search - testSearchGuillemotsSongFound
-
-test-020-search-02-process.js
-✔ testGetTrackFromSearchResult
-
-test-030-track.js
-✔ track - attributes are mapped
-
-test-050-player00-track.js
-playing track, this may take some time
-✔ testPlaySingleAlJArreauTrack
-
-test-031-album.js
-✔ album - attributes are mapped
-✔ album - cover image - default size
-✔ album - cover image - normal size (function)
-✔ album - cover image - small size (string)
-✔ album - cover image - large size (constant)
-✔ album - cover image - unknown size
-(...)
-test-080-playlist.js
-✔ playlist - get playlist from URI
-✔ playlist - attributes are mapped
-✔ playlist - get tracks
-
-test-999-cleanup.js
-✔ Not actually a test, just cleaning up
-
-<span class="code">OK</span>: 115 assertions (24709ms)
-================== Coverage summary ==================
-Statements   : 84.43% ( 396/469 )
-Branches     : 74.55% ( 82/110 )
-Functions    : 72.63% ( 69/95 )
-Lines        : 85.71% ( 384/448 )
-======================================================
-              </pre>
-            </small>
-          </section>
+          <h3>Gourous</h3>
+          <ul>
+            <li>Dominic Tarr (<code>@dominictarr</code>)</li>
+            <li>James Halliday (<code>@substack</code>)</li>
+            <li>Jake Verbaten (<code>@raynos</code>)</li>
+          </ul>
         </section>
+
         <section>
-          <section>
-            <h2>Pour finir</h2>
-          </section>
-          <section>
-          	<h2>Conseils : KISS</h2>
-            <ul>
-              <li>Mapping le plus minimal possible JS &lt;-&gt; C/C++</li>
-              <li>TDD pour maîtriser la complexité</li>
-              <li>Tester l'interface JS</li>
-              <li>Utiliser les outils C/C++ que Node.js fournit</li>
-            </ul>
-            <aside class="notes">
-              QUE DE LA GLUE<br>
-              Les Baby steps de TDD forcent à avoir le minimum de glue possibleO<br>
-              Node.js fournit des macro est des classes pour aider au développement d'addons<br>
-            </aside>
-          </section>
-          <section>
-            <h2>Difficultés courantes</h2>
-            <ul>
-            	<li>Le langage</li>
-            	<li>La compilation multi-plateforme</li>
-            	<li>Les segfaults !</li>
-            	<li>Le mutlithreading</li>
-            </ul>
-          </section>
-          <section>
-          	<h2>Ce qui vient</h2>
-            <ul>
-            	<li>Modules précompilés</li>
-            	<li>Abstraction en C plutôt que C++</li>
-            	<li>Une réécriture complète de la totalité des modules natifs !</li>
-            </ul>
-            <aside class="notes">
-              mentionner module-foundry de nodejitsu<br>
-              You're gonna rewrite it anyway. Ils ne veulent plus subir les changements d'API de v8
-            </aside>
-          </section>
-          <section>
-          	<h2>Démo / Questions</h2>
-            <p>Merci beaucoup !</p>
-            <ul>
-              <li>Github: <a href="http://github.com/Floby">http://github.com/Floby</a></li>
-              <li>Twitter: <a href="http://twitter.com/floby">http://twitter.com/floby</a></li>
-              <li>Spotify: <a href="http://open.spotify.com/user/flobyiv">http://open.spotify.com/user/flobyiv</a></li>
-            </ul>
-          </section>
+        	<h1>Merci !</h1>
+          <p>
+            Florent Jaby<br>
+            @Floby
+          </p>
         </section>
+
       </div>
 
 		</div>
