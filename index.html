@@ -57,7 +57,7 @@
         <section>
           <h2>Qu'est-ce qu'un stream ?</h2>
           <p>
-            <ul>
+            <ul class="fragment">
               <li>Une métaphore</li>
               <li>Un pattern</li>
               <li>Une classe</li>
@@ -163,7 +163,7 @@
 <span class="keyword">var</span> Readable = require(<span class="code">'stream'</span>).Readable;
 <span class="comment">// ...</span>
 
-readable.on(<span class="code">'readable'</span>, function () {
+readable.on(<span class="code">'readable'</span>, <span class="keyword">function</span> () {
   <span class="keyword">var</span> chunk = readable.read();
 });
 readable.on(<span class="code">'end'</span>, onEnd);
@@ -276,7 +276,7 @@ http.createServer(<span class="keyword">function</span> (req, res) {
             <h4>WebSockets : <strong>Shoe</strong></h4>
             <ul>
               <li>Interface <em>Stream</em> pour les websockets sur le client et le serveur</li>
-              <li>Fallbacks sur du polling pour les navigateurs incompatibles</li>
+              <li>Fallback sur du polling pour les navigateurs incompatibles</li>
               <li class="fragment">J'ai testé, ça marche !</li>
             </ul>
           </section>
