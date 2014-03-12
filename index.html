@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Node.js addons</title>
+		<title>Node.js Streams</title>
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -35,80 +35,190 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Node.js Addons</h1>
-					<p>
-						avec node-libspotify
-					</p>
+					<h1>Node.js : Streams</h1>
           <aside class="notes">
             Hello world, notes
           </aside>
 				</section>
 
-                <section data-background="white" class="presentation">
-                    <h2>Qui suis-je ?</h2>
-                    <h4 class="florent-name">Florent Jaby</h4>
-                    <p>
-                        <ul>
-                            <li>Consultant pour OCTO Technology</li>
-                            <li>Nodeur depuis 2009</li>
-                            <li>Auteur de <a href="http://github.com/Floby/node-libspotify">node-libspotify</a></li>
-                        </ul>
-                    </p>
-                    <img src="images/octo-logo.png" alt="OCTO Technology" class="octo-logo pull-right" />
-                </section>
+        <section data-background="white" class="presentation">
+            <h2>Qui suis-je ?</h2>
+            <h4 class="florent-name">Florent Jaby</h4>
+            <p>
+                <ul>
+                    <li>Consultant pour OCTO Technology</li>
+                    <li>Noder depuis 2009</li>
+                    <li><a href="http://github.com/Floby">@Floby</a> sur Github et le reste d'internet</li>
+                </ul>
+            </p>
+            <img src="images/octo-logo.png" alt="OCTO Technology" class="octo-logo pull-right" />
+        </section>
+
+        <section>
+          <h2>Qu'est-ce qu'un stream ?</h2>
+          <p>
+            <ul>
+              <li>Une métaphore</li>
+              <li>Un pattern</li>
+              <li>Une classe</li>
+            </ul>
+          </p>
+        </section>
 
         <section>
           <section>
-            <h2>Qu'est-ce qu'un addon ?</h2>
-            <p>
-                <ul>
-                  <li>Un module node.js écrit en C/C++ au lieu de JS</li>
-                  <li>Un module node.js compilé</li>
-                  <li>Peut invoquer directement des fonctions natives d'autres librairies ou du système</li>
-                </ul>
-            </p>
-            <aside class="notes">
-              Utilisation de drivers, librairies tierces
-              implementation d'un algorithme plus rapide en C
-            </aside>
+            <h2>Une métaphore</h2>
           </section>
           <section>
-            <h2>Concrètement, ça marche comment ?</h2>
-            <p>
-              <ul>
-                <li>
-                  Une librairie dynamique en <code>.node</code> au lieu de <code>.so</code> ou <code>.dll</code>
-                </li>
-                <li>
-                  Node.js charge la librairie avec <code>dlopen()</code> lorsque l'on appelle <code>require('module.node')</code>
-                </li>
-                <li>
-                  Node.js trouve le symbole du même nom avec <code>dlsym()</code> et éxecute la fonction d'initialisation
-                </li>
-              </ul>
-            </p>
-            <aside class="notes">
-              Une lib dynamique est du code machine avec une table de symboles. Node parcours cette table.
-            </aside>
+            <img src="images/mountain-stream.jpg" alt="" />
           </section>
-                    <section>
-                        <h2>Fonction d'initialisation</h2>
-                        <pre>
-<span class="code">void</span> init (Handle &lt;Object&gt; exports) {
-  exports->Set(String::NewSymbol(<span class="code">"hello"</span>), String::New(<span class="code">"world"</span>))
-}
+          <section>
+            <img src="images/tuyauterie.jpg" alt="" />
+          </section>
+          <section>
+            <blockquote>
+              Un flux de données directionnel et ordonné
+            </blockquote>
+          </section>
+          <section>
+            <table class="two">
+              <tbody>
+                <tr>
+                  <td><strong>node.js - v0.8</strong></td>
+                  <td><strong>node.js - v0.10</strong></td>
+                </tr>
+                <tr class="fragment">
+                	<td>Streams 1</td>
+                	<td>Streams 2</td>
+                </tr>
+                <tr class="fragment">
+                  <td>
+                  	<img src="images/waterfall.jpg" alt="" />
+                  </td>
+                  <td>
+                  	<img src="images/straw.jpg" alt="" />
+                  </td>
+                </tr>
+                <tr class="fragment">
+                  <td>
+                    <em>push-stream</em>
+                  </td>
+                  <td>
+                    <em>pull-stream</em>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
 
-NODE_MODULE(<span class="code">hello</span>, init)
-                        </pre>
-                    </section>
-                    <section>
-                      <h2>Utilisation</h2>
-                      <pre>
-<span class="code">var</span> addon = require(<span class="code">'hello.node'</span>);
-console.log(addon.hello);
-<span class="comment">// "world"</span>
-                      </pre>
-                    </section>
+        <section>
+          <section>
+            <h2>Un pattern</h2>
+          </section>
+          <section>
+            <p>Omniprésent dans la philosophie UNIX</p>
+            <ul>
+              <li class="fragment"><code>FILE*</code> en C sous linux</li>
+              <li class="fragment">cat "file.txt" <code>|</code> gzip <code>|</code> tee "file.txt.gz"</li>
+              <li class="fragment">Les sockets TCP</li>
+            </ul>
+            <br>
+            <br>
+            <p class="">
+              <small class="fragment">
+                <a href="http://blog.izs.me/post/48281998870/unix-philosophy-and-node-js">http://blog.izs.me/post/48281998870/unix-philosophy-and-node-js</a>
+              </small>
+            </p>
+          </section>
+          <section>
+            <p>Appartient au super-pattern de <strong>Message-Passing</strong></p>
+            <blockquote class="fragment">
+              "message passing sends a message to a process and relies on the process
+              to select and invoke the actual code to run"
+            </blockquote>
+            <blockquote class="fragment">
+              "The justifications for using an intermediate layer essentially falls into two categories: <strong>encapsulation</strong> and <strong>distribution</strong>"
+            </blockquote>
+            <br>
+            <p>
+              <small class="fragment">
+                <a href="http://en.wikipedia.org/wiki/Message_passing">http://en.wikipedia.org/wiki/Message_passing</a>
+              </small>
+            </p>
+          </section>
+
+        </section>
+
+        <section>
+        	<section>
+        		<h2>Une classe</h2>
+            <p class="fragment">... 4 en réalité</p>
+        	</section>
+
+          <section>
+          <h3>Readable</h3>
+          <pre>
+
+<span class="keyword">var</span> Readable = require(<span class="code">'stream'</span>).Readable;
+<span class="comment">// ...</span>
+
+readable.on(<span class="code">'readable'</span>, function () {
+  <span class="keyword">var</span> chunk = readable.read();
+});
+readable.on(<span class="code">'end'</span>, onEnd);
+
+<span class="fragment">
+readable.on(<span class="code">'data'</span>, <span class="keyword">function</span> (data) {
+  <span class="comment">// don't really use this please...</span>
+});
+</span>
+</pre>
+          </section>
+          <section>
+          	<h3>Writable</h3>
+            <pre>
+
+<span class="keyword">var</span> Writable = require(<span class="code">'stream'</span>).Writable;
+<span class="comment">// ...</span>
+
+writable.write(chunk);
+writable.end();
+<span class="fragment">
+<span class="keyword">var</span> written = writable.write(chunk);
+<span class="comment">// written is true or false</span>
+</span>
+</pre>
+          </section>
+          <section>
+          	<h3>Duplex</h3>
+            <pre>
+
+<span class="keyword">var</span> Duplex = require(<span class="code">'stream'</span>).Duplex;
+<span class="comment">// ...</span>
+
+<span class="keyword">var</span> socket = net.createConnection(<span class="number">80</span>, <span class="code">'google.com'</span>);
+<span class="fragment">
+socket.write(<span class="code">"GET /\r\n\r\n"</span>);
+socket.on(<span class="code">'readable'</span>, <span class="keyword">function</span> () {
+  console.log(socket.read());
+})
+</span>
+</pre>
+          </section>
+          <section>
+          	<h3>Transform</h3>
+            <pre>
+
+<span class="keyword">var</span> Transform = require(<span class="code">'stream'</span>).Transform;
+<span class="comment">// ...</span>
+
+<span class="keyword">var</span> gzip = zlib.createGzip();
+process.stdin
+  .pipe(gzip)
+  .pipe(process.stdout);
+</pre>
+          </section>
         </section>
 
         <section>

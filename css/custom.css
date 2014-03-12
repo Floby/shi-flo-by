@@ -37,3 +37,15 @@ section code .comment {
 .reveal section img {
   border: none;
 }
+
+section table {
+  width: 100%;
+}
+.reveal section table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.reveal table.two td {
+  width: 50%;
+}
