@@ -55,7 +55,8 @@
     "mux-demux": "~3.7.8",
     "trycatch": "~1.0.5",
     "ws": "~0.4.31",
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "es6ify": "^0.4.8"
   },
   "dependencies": {
     "grunt-contrib-connect": "~0.3.0",
@@ -98,6 +99,7 @@
     "chai": "~1.8.1",
     "supertest": "~0.8.1",
     "node-sha1": "0.0.1",
-    "grunt-open": "~0.2.2"
+    "grunt-open": "~0.2.2",
+    "es6ify": "^0.4.8"
   }
 }
