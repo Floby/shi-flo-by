@@ -20,4 +20,8 @@ var App = Ember.Application.create({
   isAndroid: (/Android/i).test(navigator.userAgent)
 });
 
+App.then(function () {
+  $('body .nojs-placeholder').remove();
+});
+
 export default App;
