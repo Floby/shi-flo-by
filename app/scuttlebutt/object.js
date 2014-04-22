@@ -22,7 +22,7 @@ var SbObject = Ember.Object.extend({
   },
 
   // this method is called from Ember.set
-  // which can in our case be a call from model#update or outside
+  // which can in our case be a call from model#update or Ember.set
   // the if branch covers the first case while the else branch 
   // covers the second
   setUnknownProperty: function (key, value) {
