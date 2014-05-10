@@ -1,5 +1,6 @@
 var Model = require('scuttlebutt/model');
 var Game = require('./models/game');
+var Referee = require('./referee');
 
 var game = {
   player1: new Model(),
@@ -20,10 +21,13 @@ function modelFor (game, role) {
 
 function refereeFor (game) {
   var key = game._id + '/referee';
-  if (!models[key]) {
-    var model = models[key] = new Model();
-    model.set('id', game._id);
-  }
+  if(models[key]) return models[key];
+
+  var p1 = modelFor(game, 'owner');
+  var p2 = modelFor(game, 'challenger');
+  var referee = new Referee(game, p1, p2);
+  var model = models[key] = referee;
+
   return models[key];
 }
 
