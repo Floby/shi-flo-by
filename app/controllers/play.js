@@ -44,6 +44,25 @@ var PlayerController = Ember.ObjectController.extend({
     return this.get('nowPlaying') === this.get('opponentPlaying') && this.get('nowPlaying');
   }.property('nowPlaying', 'opponentPlaying'),
 
+  refereeSpeak: function () {
+    var count = this.get('referee.count');
+    switch(count) {
+      case 2: 
+        return 'Shi...'
+        break;
+      case 1: 
+        return 'Fu...'
+        break;
+      case 0: 
+        return 'MI !!!'
+        break;
+      default:
+        return '^_^'
+        break;
+    }
+
+  }.property('referee.count'),
+
 
   init: function () {
     this.get('source.currentMove');

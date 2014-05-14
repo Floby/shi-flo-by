@@ -56,11 +56,28 @@ describe('Scuttlebutt shoe Server', function () {
       refStream.pipe(referee.createStream()).pipe(refStream);
       ownerStream.pipe(owner.createStream()).pipe(ownerStream);
       challengerStream.pipe(challenger.createStream()).pipe(challengerStream);
-      done();
+      setTimeout(done, 50);
     });
     afterEach(function (done) {
       mdm.destroy();
       done();
+    });
+
+    it('has a state "playing" when both players are online', function (done) {
+      trycatch(function () {
+        expect(referee.get('state')).to.equal('playing');
+        done();
+      }, done);
+    });
+
+    it('has a state "waiting" when both players are not online', function (done) {
+      trycatch(function () {
+        challenger.set('online', false);
+        setTimeout(function () {
+          expect(referee.get('state')).to.equal('waiting');
+          done();
+        }, 30);
+      }, done);
     });
 
 

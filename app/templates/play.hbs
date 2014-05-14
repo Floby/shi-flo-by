@@ -1,6 +1,7 @@
 <div class="play">
   <h2>Welcome <span class="text-primary player-nickname">{{me.nickname}}</span>! Prepare to fight...</h2>
   <p {{bindAttr class="opponent.online:invisible"}}>Invite your opponent at <code class="invite-link">{{inviteUrl}}</code></p>
+  <h2 {{bindAttr class="opponent.online::invisible :text-center"}}>{{refereeSpeak}}</h2>
 
   <div class="row">
     <div class="col-md-5 col-md-offset-1 opponent-name">
