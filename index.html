@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Node.js Streams</title>
+		<title>Node.js + Ember.js + Websockets = AWESOME</title>
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -35,7 +35,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Node.js : Streams</h1>
+					<h2>Node.js + Ember.js + Websockets = AWESOME</h2>
           <aside class="notes">
             Hello world, notes
           </aside>
@@ -55,275 +55,65 @@
         </section>
 
         <section>
-          <h2>Qu'est-ce qu'un stream ?</h2>
-          <p>
-            <ul class="fragment">
-              <li>Une métaphore</li>
-              <li>Un pattern</li>
-              <li>Une classe</li>
-            </ul>
+          <h3>Two-Way data binding</h3>
+          <p>dans Ember.js</p>
+
+<pre>
+  &lt;div&gt;
+    {{maVariable}}
+    {{input value="maVariable"}}
+  &lt;/div&gt;
+</pre>
+        </section>
+
+        <section>
+          <h3>Mais encore plus loin</h3>
+
+          <small>page 1</small>
+<pre>
+  &lt;div&gt;
+    {{maVariable}}
+  &lt;/div&gt;
+</pre>
+<hr/>
+          <small>page 2</small>
+<pre>
+  &lt;div&gt;
+    {{input value="maVariable"}}
+  &lt;/div&gt;
+</pre>
+        </section>
+
+        <section>
+          <h3>Scuttlebutt</h3>
+          <a href="https://github.com/dominictarr/scuttlebutt">github.com/dominictarr/scuttlebutt</a>
+          <br>
+          <br>
+          <p class="fragment">
+            <code>A -> B</code>
+          </p>
+          <p class="fragment">
+            <code>A <- B</code>
+          </p>
+          <p class="fragment">
+            <code>A <-> B</code>
+          </p>
+          <p class="fragment">
+            <code>A.pipe(B).pipe(A)</code>
           </p>
         </section>
 
         <section>
-          <section>
-            <h2>Une métaphore</h2>
-          </section>
-          <section>
-            <img src="images/mountain-stream.jpg" alt="" />
-          </section>
-          <section>
-            <img src="images/tuyauterie.jpg" alt="" />
-          </section>
-          <section>
-            <blockquote>
-              Un flux de données directionnel et ordonné
-            </blockquote>
-          </section>
-          <section>
-            <table class="two">
-              <tbody>
-                <tr>
-                  <td><strong>node.js - v0.8</strong></td>
-                  <td><strong>node.js - v0.10</strong></td>
-                </tr>
-                <tr class="fragment">
-                	<td>Streams 1</td>
-                	<td>Streams 2</td>
-                </tr>
-                <tr class="fragment">
-                  <td>
-                  	<img src="images/waterfall.jpg" alt="" />
-                  </td>
-                  <td>
-                  	<img src="images/straw.jpg" alt="" />
-                  </td>
-                </tr>
-                <tr class="fragment">
-                  <td>
-                    <em>push-stream</em>
-                  </td>
-                  <td>
-                    <em>pull-stream</em>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h2>Un pattern</h2>
-          </section>
-          <section>
-            <p>Omniprésent dans la philosophie UNIX</p>
-            <ul>
-              <li class="fragment"><code>FILE*</code> en C sous linux</li>
-              <li class="fragment">cat "file.txt" <code>|</code> gzip <code>|</code> tee "file.txt.gz"</li>
-              <li class="fragment">Les sockets TCP</li>
-            </ul>
-            <br>
-            <br>
-            <p class="">
-              <small class="fragment">
-                <a href="http://blog.izs.me/post/48281998870/unix-philosophy-and-node-js">http://blog.izs.me/post/48281998870/unix-philosophy-and-node-js</a>
-              </small>
-            </p>
-          </section>
-          <section>
-            <p>Appartient au super-pattern de <strong>Message-Passing</strong></p>
-            <blockquote class="fragment">
-              "message passing sends a message to a process and relies on the process
-              to select and invoke the actual code to run"
-            </blockquote>
-            <blockquote class="fragment">
-              "The justifications for using an intermediate layer essentially falls into two categories: <strong>encapsulation</strong> and <strong>distribution</strong>"
-            </blockquote>
-            <br>
-            <p>
-              <small class="fragment">
-                <a href="http://en.wikipedia.org/wiki/Message_passing">http://en.wikipedia.org/wiki/Message_passing</a>
-              </small>
-            </p>
-          </section>
+          <h3>Shoe</h3>
+          <a href="https://github.com/substack/shoe">github.com/substack/shoe</a>
+          <p>
+            Permet d'utiliser les websockets comme des streams node.js
+          </p>
 
         </section>
 
         <section>
-        	<section>
-        		<h2>Une classe</h2>
-            <p class="fragment">... 4 en réalité</p>
-        	</section>
-
-          <section>
-          <h3>Readable</h3>
-          <pre>
-
-<span class="keyword">var</span> Readable = require(<span class="code">'stream'</span>).Readable;
-<span class="comment">// ...</span>
-
-readable.on(<span class="code">'readable'</span>, <span class="keyword">function</span> () {
-  <span class="keyword">var</span> chunk = readable.read();
-});
-readable.on(<span class="code">'end'</span>, onEnd);
-
-<span class="fragment">
-readable.on(<span class="code">'data'</span>, <span class="keyword">function</span> (data) {
-  <span class="comment">// don't really use this please...</span>
-});
-</span>
-</pre>
-          </section>
-          <section>
-          	<h3>Writable</h3>
-            <pre>
-
-<span class="keyword">var</span> Writable = require(<span class="code">'stream'</span>).Writable;
-<span class="comment">// ...</span>
-
-writable.write(chunk);
-writable.end();
-<span class="fragment">
-<span class="keyword">var</span> written = writable.write(chunk);
-<span class="comment">// written is true or false</span>
-</span>
-</pre>
-          </section>
-          <section>
-          	<h3>Duplex</h3>
-            <pre>
-
-<span class="keyword">var</span> Duplex = require(<span class="code">'stream'</span>).Duplex;
-<span class="comment">// ...</span>
-
-<span class="keyword">var</span> socket = net.createConnection(<span class="number">80</span>, <span class="code">'google.com'</span>);
-<span class="fragment">
-socket.write(<span class="code">"GET /\r\n\r\n"</span>);
-socket.on(<span class="code">'readable'</span>, <span class="keyword">function</span> () {
-  console.log(socket.read());
-})
-</span>
-</pre>
-          </section>
-          <section>
-          	<h3>Transform</h3>
-            <pre>
-
-<span class="keyword">var</span> Transform = require(<span class="code">'stream'</span>).Transform;
-<span class="comment">// ...</span>
-
-<span class="keyword">var</span> gzip = zlib.createGzip();
-
-process.stdin
-  .pipe(gzip)
-  .pipe(process.stdout);
-</pre>
-          </section>
-          <section>
-            <h3>pipe ?</h3>
-            <p>Avec un flux en écriture et en lecture, on peut chaîner les redirections de flux</p>
-            <pre>
-http.createServer(<span class="keyword">function</span> (req, res) {
-  <span class="keyword">var</span> busboy = <span class="code">new</span> Busboy({ <span class="keyword">headers</span>: req.headers });
-  <span class="keyword">var</span> pack = tar.pack();
-  <span class="keyword">var</span> gzip = zlib.createGzip();
-
-  busboy
-    .on(<span class="code">'file'</span>, <span class="keyword">function</span> (field, stream, filename) {
-      <span class="keyword">var</span> entry = tar.entry({<span class="keyword">name</span>: filename});
-      filename.<span class="number">pipe</span>(entry);
-    })
-    .on(<span class="code">'finish'</span>, <span class="keyword">function</span> () {
-      pack.finalize();
-    });
-
-  req.<span class="number">pipe</span>(busboy);
-  pack.<span class="number">pipe</span>(gzip).<span class="number">pipe</span>(res);
-}).listen(<span class="number">80</span>);
-<pre>
-          </section>
-          <section>
-            <p>En tant qu'utilisateur de la classe Stream :</p>
-            <ul>
-              <li class="fragment">Utilisez la méthode <code>pipe()</code></li>
-              <li class="fragment">Si vous utilisez les autres, vous devriez écrire votre propre stream</li>
-            </ul>
-          </section>
-        </section>
-
-        <section>
-          <h4>objectMode</h4>
-        	<p>Les streams peuvent en réalité aussi transporter des objets serialisés en JSON</p>
-        </section>
-
-        <section>
-        	<section>
-        		<h3>Des usages cools</h3>
-        	</section>
-
-          <section>
-            <h4>Logging structuré : <strong>Bunyan</strong></h4>
-            <ul>
-            	<li>Logging d'objets plutôt que de lignes</li>
-              <li>Indépendant du transport</li>
-              <li>Peut passer par plusieurs étapes de traitement</li>
-              <li>Peut être stocké sur n'importe quel support</li>
-            </ul>
-          </section>
-
-          <section>
-            <h4>WebSockets : <strong>Shoe</strong></h4>
-            <ul>
-              <li>Interface <em>Stream</em> pour les websockets sur le client et le serveur</li>
-              <li>Fallback sur du polling pour les navigateurs incompatibles</li>
-              <li class="fragment">J'ai testé, ça marche !</li>
-            </ul>
-          </section>
-
-          <section>
-            <h4>RPC : <strong>DNode</strong></h4>
-            <ul>
-            	<li>RPC agnostique au transport</li>
-              <li>Support des callbacks de manière transparente</li>
-              <li>Fonctionne même dans le navigateur !</li>
-            </ul>
-            <br>
-            <br>
-            <p>Introduction du pattern &nbsp;<code>A.pipe(B).pipe(A)</code></p>
-          </section>
-
-          <section>
-            <h4>Replication multi-master : <strong>Scuttlebutt</strong></h4>
-            <ul>
-            	<li>Une implémentation simple du protocole Gossip</li>
-              <li>Agnostique au transport</li>
-              <li>extensible à plusieurs types de données</li>
-              <li>fonctionne aussi dans le navigateur !</li>
-            </ul>
-            <br>
-            <br>
-            <p>Utilisation du pattern &nbsp;<code>A.pipe(B).pipe(A)</code></p>
-          </section>
-
-          <section>
-            <h4>Manipulation de BDD : <strong>LevelDB</strong></h4>
-            <ul>
-            	<li>Read/Write par streams</li>
-              <li>Map/Reduce par streams</li>
-              <li>Filter par streams</li>
-            </ul>
-          </section>
-
-        </section>
-
-        <section>
-          <h3>Gourous</h3>
-          <ul>
-            <li>Dominic Tarr (<code>@dominictarr</code>)</li>
-            <li>James Halliday (<code>@substack</code>)</li>
-            <li>Jake Verbaten (<code>@raynos</code>)</li>
-          </ul>
+          <h3>Démo !</h3>
         </section>
 
         <section>
