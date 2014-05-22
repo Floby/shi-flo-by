@@ -1,4 +1,4 @@
-OCTO-FU-MI
+SHI-FLO-BY
 ==========
 
 *Online real-time shi-fu-mi with support for LeapMotion*
@@ -54,5 +54,5 @@ You MUST allow the Websocket interface for you LeapMotion device.
 
 License
 -------
-
-Don't know yet but ©2013 Florent Jaby for now.
+MIT
+© 2014 Florent Jaby
